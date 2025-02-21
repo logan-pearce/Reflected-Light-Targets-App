@@ -92,6 +92,7 @@ ticklabels = 'None'
 plotx, ploty = np.array(plotx),np.array(ploty)
 gmt_lod = 0.2063 * 0.8 / 24.5
 elt_lod = 0.2063 * 0.8 / 39
+sep_elt = plotx*(gmt_lod/elt_lod)
 multiplier = 2
 datadf = pd.DataFrame(data={'plotx':plotx, 'ploty':ploty, 'color':spt, 'markersize':rad*multiplier,
                             'name':session_state['db']['pl_name'], 'rad':rad, 'spt':spt, 'dist':session_state['db']['sy_dist'],
@@ -99,7 +100,7 @@ datadf = pd.DataFrame(data={'plotx':plotx, 'ploty':ploty, 'color':spt, 'markersi
                             'sepau':sepau, 'sepmas':sepmas, 'dec':session_state['db']['dec'], 
                             'starteff':session_state['db']['StarTeff'],
                             'masse':session_state['db']['pl_bmasse'],
-                            'sep_elt':plotx*(gmt_lod/elt_lod)
+                            'sep_elt':sep_elt
                             })
 datadf = datadf.reset_index(drop=True)
 datadict = datadf.to_dict(orient = 'list')
