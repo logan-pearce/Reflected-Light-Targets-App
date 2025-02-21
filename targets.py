@@ -90,6 +90,8 @@ ticklocs = 'None'
 ticklabels = 'None'
 
 plotx, ploty = np.array(plotx),np.array(ploty)
+gmt_lod = 0.2063 * 0.8 / 24.5
+elt_lod = 0.2063 * 0.8 / 39
 multiplier = 2
 datadf = pd.DataFrame(data={'plotx':plotx, 'ploty':ploty, 'color':spt, 'markersize':rad*multiplier,
                             'name':session_state['db']['pl_name'], 'rad':rad, 'spt':spt, 'dist':session_state['db']['sy_dist'],
@@ -117,8 +119,6 @@ from bokeh.transform import linear_cmap
 
 data=ColumnDataSource(data=datadict)
 proxima=ColumnDataSource(data=proxcendict)
-gmt_lod = 0.2063 * 0.8 / 24.5
-elt_lod = 0.2063 * 0.8 / 39
 
 tools = "hover, box_zoom, zoom_in, zoom_out, save, undo, redo, reset, pan"
 tooltips = [
