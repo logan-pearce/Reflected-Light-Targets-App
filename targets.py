@@ -92,7 +92,9 @@ ticklabels = 'None'
 plotx, ploty = np.array(plotx),np.array(ploty)
 gmt_lod = 0.2063 * 0.8 / 24.5
 elt_lod = 0.2063 * 0.8 / 39
+mag_lod = 0.2063 * 0.8 / 6.5
 sep_elt = plotx*(gmt_lod/elt_lod)
+sep_mag = plotx*(gmt_lod/mag_lod)
 multiplier = 2
 datadf = pd.DataFrame(data={'plotx':plotx, 'ploty':ploty, 'color':spt, 'markersize':rad*multiplier,
                             'name':session_state['db']['pl_name'], 'rad':rad, 'spt':spt, 'dist':session_state['db']['sy_dist'],
@@ -100,7 +102,7 @@ datadf = pd.DataFrame(data={'plotx':plotx, 'ploty':ploty, 'color':spt, 'markersi
                             'sepau':sepau, 'sepmas':sepmas, 'dec':session_state['db']['dec'], 
                             'starteff':session_state['db']['StarTeff'],
                             'masse':session_state['db']['pl_bmasse'],
-                            'sep_elt':sep_elt
+                            'sep_elt':sep_elt, 'sep_mag':sep_mag
                             })
 datadf = datadf.reset_index(drop=True)
 datadict = datadf.to_dict(orient = 'list')
@@ -128,6 +130,7 @@ tooltips = [
     ('Phase [deg]', '@phases{0}'),
     ("Sep [GMT i' lod]", '@plotx{0.0}'),
     ("Sep [ELT i' lod]", '@sep_elt{0.0}'),
+    ("Sep [MagAO-X i' lod]", '@sep_mag{0.0}'),
     ('Sep [au]', '@sepau{0.00}'),
     ('Sep [mas]', '@sepmas{0.00}'),
     ('Rad [Rearth]','@rad{0.00}'),
