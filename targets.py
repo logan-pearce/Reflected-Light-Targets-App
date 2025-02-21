@@ -116,13 +116,16 @@ from bokeh.transform import linear_cmap
 
 data=ColumnDataSource(data=datadict)
 proxima=ColumnDataSource(data=proxcendict)
+gmt_lod = 0.2063 * 0.8 / 24.5
+elt_lod = 0.2063 * 0.8 / 39
 
 tools = "hover, box_zoom, zoom_in, zoom_out, save, undo, redo, reset, pan"
 tooltips = [
     ('Planet', '@name'),
     ('Cont', '@ploty'),
     ('Phase [deg]', '@phases{0}'),
-    ("Sep [GmagAOX i' lod]", '@plotx{0.0}'),
+    ("Sep [GMT i' lod]", '@plotx{0.0}'),
+    ("Sep [ELT i' lod]", '@plotx{0.0}'*(gmt_lod/elt_lod)),
     ('Sep [au]', '@sepau{0.00}'),
     ('Sep [mas]', '@sepmas{0.00}'),
     ('Rad [Rearth]','@rad{0.00}'),
