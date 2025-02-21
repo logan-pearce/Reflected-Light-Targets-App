@@ -96,7 +96,8 @@ datadf = pd.DataFrame(data={'plotx':plotx, 'ploty':ploty, 'color':spt, 'markersi
                             'phases':phases, 'plotx_og':plotx, 'ploty_og':ploty, 'iwa': 2, 
                             'sepau':sepau, 'sepmas':sepmas, 'dec':session_state['db']['dec'], 
                             'starteff':session_state['db']['StarTeff'],
-                            'masse':session_state['db']['pl_bmasse']
+                            'masse':session_state['db']['pl_bmasse'],
+                            'sep_elt':plotx*(gmt_lod/elt_lod)
                             })
 datadf = datadf.reset_index(drop=True)
 datadict = datadf.to_dict(orient = 'list')
@@ -125,7 +126,7 @@ tooltips = [
     ('Cont', '@ploty'),
     ('Phase [deg]', '@phases{0}'),
     ("Sep [GMT i' lod]", '@plotx{0.0}'),
-    ("Sep [ELT i' lod]", '@plotx{0.0}'*(gmt_lod/elt_lod)),
+    ("Sep [ELT i' lod]", '@sep_elt{0.0}'),
     ('Sep [au]', '@sepau{0.00}'),
     ('Sep [mas]', '@sepmas{0.00}'),
     ('Rad [Rearth]','@rad{0.00}'),
