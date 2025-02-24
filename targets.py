@@ -309,7 +309,7 @@ if st.session_state.show_text:
         cont_curve = [cont_curve_seps,cont_curve_flux]
         session_state['cont_curve'] = cont_curve
         MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(cont_curve = session_state['cont_curve'])
-        st.write(':sparkles: Added! :sparkles:')
+        #st.write(':sparkles: Added! :sparkles:')
     else:
        pass
 
