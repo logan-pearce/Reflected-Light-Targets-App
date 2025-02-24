@@ -290,8 +290,8 @@ def toggle_image():
 st.button(r"$\textsf{\Large Add a contrast curve}$", on_click=toggle_image)
 
 if st.session_state.show_text:
-    '''Enter contrast curve values to display on the above plot and select planest above the curve.  Enter a list of separation values in 
-     milliarcseconds and a list of flux contrast values. '''
+    '''Enter contrast curve values to display on the above plot and select planets above the curve.  Enter a list of separation values in 
+     milliarcseconds and a list of flux contrast values, separated by commas. '''
     row_input = st.columns((1,1))
     with row_input[0]:
         cont_curve_seps = st.text_input(r"$\textsf{\Large Separation [mas]}$",key='cont_curve_seps')
