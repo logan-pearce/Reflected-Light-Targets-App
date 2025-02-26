@@ -91,7 +91,7 @@ def GetPointsWithinARegion(xdata, ydata, points):
     return indicieswithinregion
 
 
-def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(cont_curve = None):
+def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_curve = None):
     rad = session_state['db']['PlanetRadiuse'].copy()
     spt = session_state['db']['SpT Number'].copy()
     plotx = session_state['db']['MaxProjectedSeparation_lod_gmagaox']
@@ -124,7 +124,8 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(cont_curve = None):
                                 'sepau':sepau, 'sepmas':sepmas, 'dec':session_state['db']['dec'], 
                                 'starteff':session_state['db']['StarTeff'],
                                 'masse':session_state['db']['pl_bmasse'],
-                                'sep_elt':sep_elt, 'sep_mag':sep_mag, 'period':session_state['db']['pl_orbper']
+                                'sep_elt':sep_elt, 'sep_mag':sep_mag, 'period':session_state['db']['pl_orbper'],
+                                'stargaiamag':session_state['db']['sy_gaiamag']
                                 })
     datadf = datadf.reset_index(drop=True)
     datadict = datadf.to_dict(orient = 'list')
@@ -160,6 +161,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(cont_curve = None):
         ('Mass or Msini [Mearth]','@masse{0.0}'),
         ('Star Teff', '@starteff{0}'),
         ('SpT','@spt{0.0}'),
+        ('Star Gaia G', '@stargaiamag{0.0}'),
         ('Dist [pc]','@dist{0.0}'),
         ('Decl', '@dec{0.0}')
     ]
@@ -211,7 +213,8 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(cont_curve = None):
                                     'phases':phases[points], 'plotx_og':plotx[points], 'ploty_og':ploty[points], 'iwa': 2, 
                                     'sepau':sepau[points], 'sepmas':sepmas[points], 'dec':session_state['db']['dec'][points], 
                                     'starteff':session_state['db']['StarTeff'][points],
-                                    'masse':session_state['db']['pl_bmasse'][points]
+                                    'masse':session_state['db']['pl_bmasse'][points],'period':session_state['db']['pl_orbper'][points],
+                                    'sep_elt':sep_elt[points], 'sep_mag':sep_mag[points],'stargaiamag':session_state['db']['sy_gaiamag'][points]
                                    })
         datadfpoints = datadfpoints.reset_index(drop=True)
         datadfpointsdict = datadfpoints.to_dict(orient = 'list')
@@ -281,7 +284,12 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(cont_curve = None):
 
 if 'cont_curve' not in session_state:
     session_state['cont_curve'] = None
-    MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(cont_curve = session_state['cont_curve'])
+
+######### Render the plot
+if session_state['cont_curve'] == None:
+    MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_curve = session_state['cont_curve'])
+else:
+    pass
 
 if 'show_text' not in st.session_state:
     st.session_state.show_text = False
@@ -299,7 +307,7 @@ if st.session_state.show_text:
     with row_input[1]:
         cont_curve_flux = st.text_input(r"$\textsf{\Large Flux contrast}$",key='cont_curve_flux')
     
-    st.write(cont_curve_seps, cont_curve_flux)
+    #st.write(cont_curve_seps, cont_curve_flux)
 
 
     if st.button(r"$\textsf{\Large Enter Contrast Curve}$", key='generate2'):
@@ -309,7 +317,7 @@ if st.session_state.show_text:
         cont_curve_flux = [float(cc.replace(' ','')) for cc in cont_curve_flux]
         cont_curve = [cont_curve_seps,cont_curve_flux]
         session_state['cont_curve'] = cont_curve
-        MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(cont_curve = session_state['cont_curve'])
+        MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_curve = session_state['cont_curve'])
         #st.write(':sparkles: Added! :sparkles:')
     else:
        pass
