@@ -91,9 +91,6 @@ def MakePlot(planet, date, lim, plot_expected_position = True, plot_aperture = T
 
 
 
-plDict = {
-    '61 Vir c'
-}
 
 if "date_max_elong" not in st.session_state:
     st.session_state.date_max_elong = True
@@ -104,6 +101,7 @@ if "date_max_elong" not in st.session_state:
 
 rows = st.columns((1,1))
 with rows[0]:
+    st.write('#### Enter orbital parameter mean and std deviation separated by commas in the unit specified:')
     with st.form("my_form"):
         # option = st.selectbox(
         #     "Select a Planet",
@@ -199,7 +197,6 @@ with rows[0]:
             else:
                 st.session_state.aperture = gmt_lod
 
-        # Every form must have a submit button.
         submitted = st.form_submit_button("Submit")
         if submitted:
             with rows[1]:
@@ -220,7 +217,51 @@ with rows[0]:
                     aperture_radius = st.session_state.aperture)
                 st.pyplot(fig)
 
+with rows[1]:
+    st.write('#### Or select a planet and solution from the drop down menu:')
 
+    plDict = {
+    '61 Vir c':{
+        'Vogt 2010':{'sma':[0.2175, 0.0001], 'Period':[38.021,0.034], 'ecc':[0.14,0.06], 'Mpsini':[18.2,1.1],
+                    'argp':[161, 38], 'lan':0, 'inc':np.nan, 't0':[2453350.5, 4.3], 'Mstar':[0.94, 0.03], 'plx':[117.573,0.237902],
+                    'Mp_is_Mpsini':True}, 
+        'Cretignier 2023':['m','n']},
+    'HD 192310 b':['Howard 2011', 'Pepe 2011', 'Cretignier 2023']
+    }
+
+    planetselect = st.selectbox(
+        "",
+        ([key for key in plDict.keys()]),index=None,
+        placeholder="Select planet", label_visibility='collapsed'
+        )
+    
+    solutionselect = st.selectbox(
+        "",
+        ([key for key in plDict[planetselect].keys()]),index=None,
+        placeholder="Select orbit solution", label_visibility='collapsed'
+        )
+    #st.write(plDict[planetselect][solutionselect])
+    pl = Planet(
+        plDict[planetselect][solutionselect]['sma'],
+        plDict[planetselect][solutionselect]['ecc'],
+        plDict[planetselect][solutionselect]['inc'],
+        plDict[planetselect][solutionselect]['argp'],
+        plDict[planetselect][solutionselect]['lan'],
+        plDict[planetselect][solutionselect]['Period'],
+        plDict[planetselect][solutionselect]['t0'],
+        plDict[planetselect][solutionselect]['Mpsini'],
+        plDict[planetselect][solutionselect]['Mstar'],
+        plDict[planetselect][solutionselect]['plx'],
+        Mp_is_Mpsini = plDict[planetselect][solutionselect]['Mp_is_Mpsini'])
+    if st.session_state.lim == 0:
+        lim = max(pl.seps_mean_params) + 0.3*max(pl.seps_mean_params)
+    else:
+        lim = st.session_state.lim
+    fig = MakePlot(pl, pl.date_of_max_elongation, lim, 
+                    plot_expected_position = True, 
+                    plot_aperture = st.session_state.plot_aperture, 
+                    aperture_radius = st.session_state.aperture)
+    st.pyplot(fig)
 
 
 
