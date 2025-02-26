@@ -111,7 +111,7 @@ with rows[0]:
         #     index=None,
         # )
         
-        collect_numbers = lambda x : [float(i) for i in re.split("[^0-9]", x) if i != ""]
+        collect_numbers = lambda x : [float(i) for i in re.split(",", x) if i != ""]
 
         sma = st.text_input("sma [au]:", key='sma')
         sma = collect_numbers(sma)
@@ -134,7 +134,6 @@ with rows[0]:
                 incl = incl[0]
             else:
                 pass
-        #st.write(incl)
 
         lan = st.text_input("lan [deg]:", '0', key='lan')
         if lan == 'nan':
@@ -145,7 +144,6 @@ with rows[0]:
                 lan = lan[0]
             else:
                 pass
-        #st.write(lan)
 
         t0 = st.text_input("T0 [JD]:", key='t0')
         t0 = collect_numbers(t0)
@@ -206,17 +204,17 @@ with rows[0]:
         if submitted:
             with rows[1]:
                 pl = Planet(sma,ecc,incl,argp,lan,Period,t0,Mpsini,Mstar,plx,Mp_is_Mpsini = st.session_state.Mp_is_Mpsini)
-                st.write(pl.date_of_max_elongation, st.session_state.date_max_elong)
                 if st.session_state.date_max_elong:
                     date = pl.date_of_max_elongation
                 else:
                     date = obsdate
-                st.write(date)
 
-                if "lim" not in st.session_state:
-                    st.session_state.lim = max(pl.seps_mean_params) + 0.01*max(pl.seps_mean_params)
+                if st.session_state.lim == 0:
+                    lim = max(pl.seps_mean_params) + 0.3*max(pl.seps_mean_params)
+                else:
+                    lim = st.session_state.lim
                 
-                fig = MakePlot(pl, date, st.session_state.lim, 
+                fig = MakePlot(pl, date, lim, 
                     plot_expected_position = True, 
                     plot_aperture = st.session_state.plot_aperture, 
                     aperture_radius = st.session_state.aperture)
