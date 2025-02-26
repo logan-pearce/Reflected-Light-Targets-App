@@ -25,14 +25,14 @@ st.title('Known nearby planets comprising a target sample for ground-based refle
 
 st.markdown(
     """
-    This plot shows 100s of the nearest ($<$70 pc) known RV-detected planets in the [Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/) (as of Aug 2023), plotted as a function of separation, contrast, and phase for GMagAO-X on the GMT.  For planets without inclinitation values in the Archive, we used inclination = $60^{o}$, the average inclination for a uniform half-sphere.  If radius was not available in the Exoplanet Archive, we used a [Mass/Radius relation](https://github.com/logan-pearce/Reflected-Light/blob/main/Jareds-planet-mass-radius-daig.pdf); if mass was not available we used Msini.  Separation is in units of $\lambda/D$, the fundamental length scale for direct imaging (1 $\lambda/D$ ~ FWHM of PSF core). More details on how these target list was built and values computed is found [here](http://www.loganpearcescience.com/reflected-light-calculations.html)
+    This plot shows 100s of the nearest ($<$70 pc) known RV-detected planets in the [Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/) (as of Aug 2023), plotted as a function of separation, contrast, and phase for GMagAO-X on the GMT.  For planets without inclinitation values in the Archive, we used inclination = $60^{o}$, the average inclination for a uniform half-sphere.  If radius was not available in the Exoplanet Archive, we used a [Mass/Radius relation](https://github.com/logan-pearce/Reflected-Light/blob/main/Jareds-planet-mass-radius-daig.pdf); if mass was not available we used Msini.  Separation is in units of $\lambda/D$, the fundamental length scale for direct imaging (1 $\lambda/D$ ~ FWHM of PSF core). More details on how these target list was built and values computed is found in the Derivation tab or [here](http://www.loganpearcescience.com/reflected-light-calculations.html)
 
     Hover over points to get information about each planet. You can zoom and pan using the buttons in the top right. You can adjust the wavelength, the primary diameter, and the geometric albedo using the sliders below.
     You can also select objects using the SQL interface which will automatically update the plot. Example:
 """
 )
 
-''' Select planets with radius less than 5 Rearth accessible from the GMT site '''
+''' For Example: Select planets with radius less than 5 Rearth accessible from the GMT site: '''
 strg = "SELECT * FROM targets WHERE PlanetRadiuse < 5 AND dec < 20 AND dec > -65"
 st.code(strg, language="sql")
 
