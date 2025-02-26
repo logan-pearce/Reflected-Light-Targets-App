@@ -9,3 +9,4 @@ astropy
 astroquery
 projecc
 photutils
+scipy

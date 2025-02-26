@@ -124,7 +124,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(cont_curve = None):
                                 'sepau':sepau, 'sepmas':sepmas, 'dec':session_state['db']['dec'], 
                                 'starteff':session_state['db']['StarTeff'],
                                 'masse':session_state['db']['pl_bmasse'],
-                                'sep_elt':sep_elt, 'sep_mag':sep_mag
+                                'sep_elt':sep_elt, 'sep_mag':sep_mag, 'period':session_state['db']['pl_orbper']
                                 })
     datadf = datadf.reset_index(drop=True)
     datadict = datadf.to_dict(orient = 'list')
@@ -150,6 +150,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(cont_curve = None):
         ('Planet', '@name'),
         ('Cont', '@ploty'),
         ('Phase [deg]', '@phases{0}'),
+        ('Period [days]', '@period{0.0}'),
         ("Sep [GMT i' lod]", '@plotx{0.0}'),
         ("Sep [ELT i' lod]", '@sep_elt{0.0}'),
         ("Sep [MagAO-X i' lod]", '@sep_mag{0.0}'),
