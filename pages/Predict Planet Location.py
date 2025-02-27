@@ -39,7 +39,7 @@ def GetOrbitLocOnDate(planet, obstime):
         ind = np.where(planet.periastron_times <= obstime)[0]
         nearest_periastron = planet.periastron_times[ind[-1]]
         # Using the mean orbit parameter values generate an array of separations spanning one orbit:
-        Orbfrac = (obstime - nearest_periastron) / planet.period[0]
+        Orbfrac = (obstime - nearest_periastron) / (planet.period[0]*u.d.to(u.yr))
         if type(planet.inc) == list:
             incl = planet.inc[0]
         elif type(planet.inc) == int:
@@ -81,15 +81,17 @@ def MakePlot(planet, date, lim, plot_expected_position = True, plot_aperture = T
                 (points.ra_mas - ras1)**2 +
                 (points.dec_mas - decs1)**2
                 )
-        print(np.where(sep < aperture_radius)[0].shape[0]/sep.shape[0])
         from photutils.aperture import CircularAperture
         aper = CircularAperture([ras1,decs1],
                             aperture_radius)
         aper.plot(color='pink', lw=2)
+        frac = np.where(sep < aperture_radius)[0].shape[0]/sep.shape[0]
+        stdev = np.std(sep)
+    else:
+        frac = np.nan
+        stdev = np.nan
     
-    return fig
-
-
+    return fig, frac, stdev, seps1
 
 
 if "date_max_elong" not in st.session_state:
@@ -103,11 +105,6 @@ rows = st.columns((1,1))
 with rows[0]:
     st.write('#### Enter orbital parameter mean and std deviation separated by commas in the unit specified:')
     with st.form("my_form"):
-        # option = st.selectbox(
-        #     "Select a Planet",
-        #     ("61 Vir c"),
-        #     index=None,
-        # )
         
         collect_numbers = lambda x : [float(i) for i in re.split(",", x) if i != ""]
 
@@ -211,42 +208,59 @@ with rows[0]:
                 else:
                     lim = st.session_state.lim
                 
-                fig = MakePlot(pl, date, lim, 
+                fig, frac = MakePlot(pl, date, lim, 
                     plot_expected_position = True, 
                     plot_aperture = st.session_state.plot_aperture, 
                     aperture_radius = st.session_state.aperture)
                 st.pyplot(fig)
+                st.write('Fraction of points within aperture: {:.2f}'.format(frac))
+                """
+                Mp/Mpsini [Mearth]: """+str(plDict[planetselect][solutionselect]['Mpsini'])+"""\n
+                sma [au]: """+str(plDict[planetselect][solutionselect]['sma'])+"""\n
+                ecc: """+str(plDict[planetselect][solutionselect]['ecc'])+"""\n
+                inc [deg]: """+str(plDict[planetselect][solutionselect]['inc'])+"""\n
+                argp [deg]: """+str(plDict[planetselect][solutionselect]['argp'])+"""\n
+                lan [deg]: """+str(plDict[planetselect][solutionselect]['lan'])+"""\n
+                period [days]: """+str(plDict[planetselect][solutionselect]['Period'])+"""\n
+                T0 [JD]: """+str(plDict[planetselect][solutionselect]['t0'])+"""\n
+                Mstar [Msun]: """+str(plDict[planetselect][solutionselect]['Mstar'])+"""\n
+                plx [mas]: """+str(plDict[planetselect][solutionselect]['plx'])
 
 with rows[1]:
     st.write('#### Or select a planet and solution from the drop down menu:')
 
-    plDict = {
-    '61 Vir c':{
-        'Vogt 2010':{'sma':[0.2175, 0.0001], 'Period':[38.021,0.034], 'ecc':[0.14,0.06], 'Mpsini':[18.2,1.1],
-                    'argp':[161, 38], 'lan':0, 'inc':np.nan, 't0':[2453350.5, 4.3], 'Mstar':[0.94, 0.03], 'plx':[117.573,0.237902],
-                    'Mp_is_Mpsini':True}, 
-        'Cretignier 2023':['m','n']},
-    'HD 192310 b':['Howard 2011', 'Pepe 2011', 'Cretignier 2023']
-    }
+    from orbitdict import *
 
     planetselect = st.selectbox(
-        "",
+        "Select planet",
         ([key for key in plDict.keys()]),index=None,
         placeholder="Select planet", label_visibility='collapsed'
         )
     
     solutionselect = st.selectbox(
-        "",
+        "Select solution",
         ([key for key in plDict[planetselect].keys()]),index=None,
         placeholder="Select orbit solution", label_visibility='collapsed'
         )
+
+    if plDict[planetselect][solutionselect]['lan'] == 0:
+        rows4 = st.columns((1,1))
+        with rows4[0]:
+            st.write('Long of nodes is unconstrained. Select "nan" to allow all possible values, select "0" to limit lan to 0 deg only')
+        with rows4[1]:
+            st.radio("Set lan",
+                key="set_lan",
+                options=[0,np.nan], )
+        lan = st.session_state.set_lan
+    else:
+        lan = plDict[planetselect][solutionselect]['lan']
     #st.write(plDict[planetselect][solutionselect])
     pl = Planet(
         plDict[planetselect][solutionselect]['sma'],
         plDict[planetselect][solutionselect]['ecc'],
         plDict[planetselect][solutionselect]['inc'],
         plDict[planetselect][solutionselect]['argp'],
-        plDict[planetselect][solutionselect]['lan'],
+        lan,
         plDict[planetselect][solutionselect]['Period'],
         plDict[planetselect][solutionselect]['t0'],
         plDict[planetselect][solutionselect]['Mpsini'],
@@ -257,11 +271,42 @@ with rows[1]:
         lim = max(pl.seps_mean_params) + 0.3*max(pl.seps_mean_params)
     else:
         lim = st.session_state.lim
-    fig = MakePlot(pl, pl.date_of_max_elongation, lim, 
-                    plot_expected_position = True, 
-                    plot_aperture = st.session_state.plot_aperture, 
+    if np.any(np.isnan(lan)):
+        plot_aperture = False
+        plot_expected_position =  False
+    else:
+        plot_expected_position = True
+        plot_aperture = st.session_state.plot_aperture
+    fig, frac, stdev, meansep = MakePlot(pl, pl.date_of_max_elongation, lim, 
+                    plot_expected_position = plot_expected_position, 
+                    plot_aperture = plot_aperture, 
                     aperture_radius = st.session_state.aperture)
     st.pyplot(fig)
+
+    st.write('Fraction of points within aperture: {:.2f}'.format(frac))
+    st.write('Ratio of std dev of separation of points from expected to expected separation: {:.2f}'.format(stdev/meansep))
+
+    """
+    Mp/Mpsini [Mearth]: """+str(plDict[planetselect][solutionselect]['Mpsini'])+"""\n
+    sma [au]: """+str(plDict[planetselect][solutionselect]['sma'])+"""\n
+    ecc: """+str(plDict[planetselect][solutionselect]['ecc'])+"""\n
+    inc [deg]: """+str(plDict[planetselect][solutionselect]['inc'])+"""\n
+    argp [deg]: """+str(plDict[planetselect][solutionselect]['argp'])+"""\n
+    lan [deg]: """+str(lan)+"""\n
+    period [days]: """+str(plDict[planetselect][solutionselect]['Period'])+"""\n
+    T0 [JD]: """+str(plDict[planetselect][solutionselect]['t0'])+"""\n
+    Mstar [Msun]: """+str(plDict[planetselect][solutionselect]['Mstar'])+"""\n
+    plx [mas]: """+str(plDict[planetselect][solutionselect]['plx'])
+
+    import io
+    img = io.BytesIO()
+    fig.savefig(img, format='png', dpi=300, bbox_inches='tight')
+    btn = st.download_button(
+        label="Download Figure",
+        data=img,
+        file_name='figure.png',
+        mime="image/png"
+)
 
 
 

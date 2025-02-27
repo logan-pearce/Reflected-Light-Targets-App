@@ -7,6 +7,7 @@ from bokeh.palettes import Magma256, Viridis256
 import sqlite3
 from streamlit import session_state
 import astropy.units as u
+from orbitdict import *
 
 st.set_page_config(
         page_title="ELT Reflected Light Targets",
@@ -27,7 +28,8 @@ st.markdown(
     """
     This plot shows 100s of the nearest ($<$70 pc) known RV-detected planets in the [Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/) (as of Aug 2023), plotted as a function of separation, contrast, and phase for GMagAO-X on the GMT.  For planets without inclinitation values in the Archive, we used inclination = $60^{o}$, the average inclination for a uniform half-sphere.  If radius was not available in the Exoplanet Archive, we used a [Mass/Radius relation](https://github.com/logan-pearce/Reflected-Light/blob/main/Jareds-planet-mass-radius-daig.pdf); if mass was not available we used Msini.  Separation is in units of $\lambda/D$, the fundamental length scale for direct imaging (1 $\lambda/D$ ~ FWHM of PSF core). More details on how these target list was built and values computed is found in the Derivation tab or [here](http://www.loganpearcescience.com/reflected-light-calculations.html)
 
-    Hover over points to get information about each planet. You can zoom and pan using the buttons in the top right. You can adjust the wavelength, the primary diameter, and the geometric albedo using the sliders below.
+    Hover over points to get information about each planet. You can zoom and pan using the buttons in the top right. You can adjust the wavelength, the primary diameter, and the geometric albedo using the sliders below. Planets highlighted in orange have orbit solutions in the "Predict Planet Location" tab.
+    
     You can also select objects using the SQL interface which will automatically update the plot. Example:
 """
 )
@@ -187,6 +189,27 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
 
     p.add_layout(color_bar, 'right')
 
+    keys = [key for key in plDict.keys() if '---' not in key]
+    names = np.array(data.data['name'])
+    ind = []
+    for key in keys:
+        ind.append(int(np.where(names == key)[0][0]))
+    datadfpoints = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
+                                          'phases':phases[ind], 'color':spt[ind], 
+                                   'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
+                                   'spt':spt[ind], 'dist':session_state['db']['sy_dist'][ind],
+                                    'phases':phases[ind], 'plotx_og':plotx[ind], 'ploty_og':ploty[ind], 'iwa': 2, 
+                                    'sepau':sepau[ind], 'sepmas':sepmas[ind], 'dec':session_state['db']['dec'][ind], 
+                                    'starteff':session_state['db']['StarTeff'][ind],
+                                    'masse':session_state['db']['pl_bmasse'][ind],'period':session_state['db']['pl_orbper'][ind],
+                                    'sep_elt':sep_elt[ind], 'sep_mag':sep_mag[ind],'stargaiamag':session_state['db']['sy_gaiamag'][ind]
+                                   })
+    datadfpoints = datadfpoints.reset_index(drop=True)
+    datadfpointsdict = datadfpoints.to_dict(orient = 'list')
+    datapoints=ColumnDataSource(data=datadfpointsdict)
+    p.scatter('plotx','ploty', source=datapoints, fill_alpha=1, size='markersize', 
+                line_color='orangered', color=None, line_width=2)
+
     if cont_curve is None:
         pass
     else:
@@ -286,11 +309,6 @@ if 'cont_curve' not in session_state:
     session_state['cont_curve'] = None
 
 ######### Render the plot
-if session_state['cont_curve'] == None:
-    MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_curve = session_state['cont_curve'])
-else:
-    pass
-
 if 'show_text' not in st.session_state:
     st.session_state.show_text = False
 def toggle_image():
@@ -321,5 +339,10 @@ if st.session_state.show_text:
         #st.write(':sparkles: Added! :sparkles:')
     else:
        pass
+
+if session_state['cont_curve'] == None:
+    MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_curve = session_state['cont_curve'])
+else:
+    pass
 
     
