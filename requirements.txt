@@ -7,6 +7,6 @@ matplotlib
 bokeh==2.4.3
 astropy
 astroquery
-projecc>=1.1.0
+projecc==1.1.1
 photutils
 scipy
