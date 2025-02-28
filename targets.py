@@ -10,12 +10,12 @@ import astropy.units as u
 from orbitdict import *
 
 st.set_page_config(
-        page_title="ELT Reflected Light Targets",
-        page_icon="images/Starcutout.png",
+        page_title="Reflected Light Planets",
+        page_icon="images/star-only-orange-transp.png",
         layout="wide",
     )
 
-sidebar_logo = 'images/Starcutout.png'
+sidebar_logo = 'images/star-only-orange-transp.png'
 st.logo(sidebar_logo, size='large')
 
 # left_co, cent_co,last_co = st.columns(3)
