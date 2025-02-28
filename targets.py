@@ -18,19 +18,25 @@ st.set_page_config(
 sidebar_logo = 'images/Starcutout.png'
 st.logo(sidebar_logo, size='large')
 
-left_co, cent_co,last_co = st.columns(3)
-with cent_co:
-    st.image('images/logo.png', width=300)
+# left_co, cent_co,last_co = st.columns(3)
+# with cent_co:
+#     st.image('images/logo.png', width=300)
 
-st.title('Known nearby planets comprising a target sample for ground-based reflected light imaging with MagAO-X, GMT, and ELT.')
+st.title('Known nearby planets comprising a target sample for reflected light imaging.')
 
 st.markdown(
     """
-    This plot shows 100s of the nearest ($<$70 pc) known RV-detected planets in the [Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/) (as of Aug 2023), plotted as a function of separation, contrast, and phase for GMagAO-X on the GMT.  For planets without inclinitation values in the Archive, we used inclination = $60^{o}$, the average inclination for a uniform half-sphere.  If radius was not available in the Exoplanet Archive, we used a [Mass/Radius relation](https://github.com/logan-pearce/Reflected-Light/blob/main/Jareds-planet-mass-radius-daig.pdf); if mass was not available we used Msini.  Separation is in units of $\lambda/D$, the fundamental length scale for direct imaging (1 $\lambda/D$ ~ FWHM of PSF core). More details on how these target list was built and values computed is found in the Derivation tab or [here](http://www.loganpearcescience.com/reflected-light-calculations.html)
+    This plot shows 100s of the nearest ($<$70 pc) known RV-detected planets in the [Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/) (as of Feb 2025), plotted as a function of separation, contrast, and phase for GMagAO-X on the GMT.  For planets without inclinitation values in the Archive, we used inclination = $60^{o}$, the average inclination for a uniform half-sphere.  If radius was not available in the Exoplanet Archive, we used a [Mass/Radius relation](https://github.com/logan-pearce/Reflected-Light/blob/main/Jareds-planet-mass-radius-daig.pdf); if mass was not available we used Msini.  Separation is in units of $\lambda/D$, the fundamental length scale for direct imaging (1 $\lambda/D$ ~ FWHM of PSF core). Contrast shown here is the reflected light only contrast for a uniform Lambertian sphere at the physical separation, phase, uniform albedo, and radius in the database; no albedo variation with wavelength or thermal emission is incorporated here.
 
-    Hover over points to get information about each planet. You can zoom and pan using the buttons in the top right. You can adjust the wavelength, the primary diameter, and the geometric albedo using the sliders below. Planets highlighted in orange have orbit solutions in the "Predict Planet Location" tab.
+    <---- Details of how this target list was compiled, assumptions made, and notebooks for generating this list yourself are in the "Derivations" tab.
+
+    Hover over points to get information about each planet. You can zoom and pan using the buttons in the top right. You can adjust the wavelength, the primary diameter, and the geometric albedo using the sliders below. For example, the see how planets would appear for Roman CGI, slide the primary diameter tab to 2.4 meters; for ELT, slide it to 39 m.
     
-    You can also select objects using the SQL interface which will automatically update the plot. Example:
+    Planets highlighted in orange have orbit solutions in the "Predict Planet Location" tab.
+
+    <---- The "Predict Planet Location" tab uses the [`projecc`](https://github.com/logan-pearce/projecc) package to turn literature orbit solutions into a prediction of planet location in the sky plane at a specified date.
+
+    You can also select objects using the SQL interface which will automatically update the plot.:
 """
 )
 
@@ -301,6 +307,12 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     AgSlider.js_on_change('value', CustomJS(args=slider_args2,code=sliders_callback_code))
     LambdaSlider.js_on_change('value', CustomJS(args=slider_args2,code=sliders_callback_code))
     DSlider.js_on_change('value', CustomJS(args=slider_args2,code=sliders_callback_code))
+
+    slider_args3 = dict(source=datapoints, Ag=AgSlider, Lambda=LambdaSlider, D=DSlider)
+
+    AgSlider.js_on_change('value', CustomJS(args=slider_args3,code=sliders_callback_code))
+    LambdaSlider.js_on_change('value', CustomJS(args=slider_args3,code=sliders_callback_code))
+    DSlider.js_on_change('value', CustomJS(args=slider_args3,code=sliders_callback_code))
 
     st.bokeh_chart(column(p, row(AgSlider),row(LambdaSlider),row(DSlider)), use_container_width=True)
     #st.bokeh_chart(p, use_container_width=True)

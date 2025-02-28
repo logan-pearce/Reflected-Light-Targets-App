@@ -11,9 +11,9 @@ st.set_page_config(
 sidebar_logo = 'images/Starcutout.png'
 st.logo(sidebar_logo, size='large')
 
-left_co, cent_co,last_co = st.columns(3)
-with cent_co:
-    st.image('images/logo.png', width=300)
+# left_co, cent_co,last_co = st.columns(3)
+# with cent_co:
+#     st.image('images/logo.png', width=300)
 
 def read_markdown_file(markdown_file):
     return Path(markdown_file).read_text()
