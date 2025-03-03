@@ -1,4 +1,5 @@
 import numpy as np
+import astropy.units as u
 
 
 plDict = {
@@ -128,4 +129,10 @@ plDict = {
                     'Mp_is_Mpsini':True}
                     },
     '--- Roman CGI ---':{},
+    'eps Eri b':{
+        'Thompson+ 2025 full soln':{'sma':[3.53,0.04], 'Period':[7.32*u.yr.to(u.d), 0.07*u.yr.to(u.d)], 'ecc':[0.06,0.06], 'Mpsini':[0.98,0.9],
+                    'argp':[263,100], 'lan':[191,9], 'inc':[41,6], 't0':[2458126,1000], 
+                    'Mstar':[0.820,0.02], 'plx':[310.577,0.1355],
+                    'Mp_is_Mpsini':False}
+    }
     }

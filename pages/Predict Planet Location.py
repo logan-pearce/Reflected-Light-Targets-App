@@ -33,6 +33,7 @@ https://github.com/logan-pearce/projecc; http://www.loganpearcescience.com
 gmt_lod = (0.2063 * 0.8 / 24.5) * 1000
 elt_lod = (0.2063 * 0.8 / 39) * 1000
 mag_lod = (0.2063 * 0.8 / 6.5) * 1000
+cgi_lod = (0.2063 * 0.8 / 2.4) * 1000
 
 def GetOrbitLocOnDate(planet, obstime):
         # find the most recent time of periastron to that date:
@@ -245,49 +246,121 @@ with rows[1]:
             ([key for key in plDict[planetselect].keys()]),index=None,
             placeholder="Select orbit solution", label_visibility='collapsed'
             )
+    if planetselect != None:
+        if solutionselect != None:
+            if plDict[planetselect][solutionselect]['lan'] == 0:
+                rows4 = st.columns((1,1))
+                with rows4[0]:
+                    st.write('Long of nodes is unconstrained. Select "nan" to allow all possible values, select "0" to limit lan to 0 deg only')
+                with rows4[1]:
+                    st.radio("Set lan",
+                        key="set_lan",
+                        options=[np.nan,0])
+
+    if planetselect != None:
+        if solutionselect != None:
+            rows5 = st.columns((1,1))
+            with rows5[1]:
+                obsdate = st.text_input("Obs Date [decimalyear]:")
+                
+            with rows5[0]:
+                st.radio(
+                    "Use date of max elongation",
+                    key="date_max_elong2",
+                    options=[True, False], )
+
+    if planetselect != None:
+        if solutionselect != None:
+            rows6 = st.columns((1,1))
+            with rows6[0]:
+                if plDict[planetselect][solutionselect]['lan'] == 0:
+                    if np.isnan(st.session_state.set_lan):
+                        st.radio(
+                                "Plot aperture",
+                                key="plot_aperture2",
+                                options=[True, False], index=1)
+                    else:
+                            st.radio(
+                                "Plot aperture",
+                                key="plot_aperture2",
+                                options=[True, False], )
+            with rows6[1]:
+                aperture = st.selectbox(
+                    "Aperture size",
+                    ("GMT", "ELT", "Mag", "Roman"),
+                    key="aperture_size2"
+                    )
+            if aperture == 'ELT':
+                st.session_state.aperture2 = elt_lod
+            elif aperture == 'Mag':
+                st.session_state.aperture2 = mag_lod
+            elif aperture == 'Roman':
+                st.session_state.aperture2 = cgi_lod
+            else:
+                st.session_state.aperture2 = gmt_lod
 
     submitted2 = st.button("Generate Plot")
     if submitted2:
-
+        
         if plDict[planetselect][solutionselect]['lan'] == 0:
-            rows4 = st.columns((1,1))
-            with rows4[0]:
-                st.write('Long of nodes is unconstrained. Select "nan" to allow all possible values, select "0" to limit lan to 0 deg only')
-            with rows4[1]:
-                st.radio("Set lan",
-                    key="set_lan",
-                    options=[0,np.nan], )
-            lan = st.session_state.set_lan
+            pl = Planet(
+                plDict[planetselect][solutionselect]['sma'],
+                plDict[planetselect][solutionselect]['ecc'],
+                plDict[planetselect][solutionselect]['inc'],
+                plDict[planetselect][solutionselect]['argp'],
+                st.session_state.set_lan,
+                plDict[planetselect][solutionselect]['Period'],
+                plDict[planetselect][solutionselect]['t0'],
+                plDict[planetselect][solutionselect]['Mpsini'],
+                plDict[planetselect][solutionselect]['Mstar'],
+                plDict[planetselect][solutionselect]['plx'],
+                Mp_is_Mpsini = plDict[planetselect][solutionselect]['Mp_is_Mpsini'])
+            if st.session_state.lim == 0:
+                lim = max(pl.seps_mean_params) + 0.3*max(pl.seps_mean_params)
+            else:
+                lim = st.session_state.lim
+            if st.session_state.date_max_elong2:
+                date = pl.date_of_max_elongation
+            else:
+                date = obsdate
+            if np.isnan(st.session_state.set_lan):
+                plot_expected_position = False
+            else:
+                plot_expected_position = True
+            fig, frac, stdev, meansep = MakePlot(pl, date, lim, 
+                    plot_expected_position = plot_expected_position, 
+                    plot_aperture = st.session_state.plot_aperture2, 
+                    aperture_radius = st.session_state.aperture2)
+            st.pyplot(fig)
         else:
-            lan = plDict[planetselect][solutionselect]['lan']
-        #st.write(plDict[planetselect][solutionselect])
-        pl = Planet(
-            plDict[planetselect][solutionselect]['sma'],
-            plDict[planetselect][solutionselect]['ecc'],
-            plDict[planetselect][solutionselect]['inc'],
-            plDict[planetselect][solutionselect]['argp'],
-            lan,
-            plDict[planetselect][solutionselect]['Period'],
-            plDict[planetselect][solutionselect]['t0'],
-            plDict[planetselect][solutionselect]['Mpsini'],
-            plDict[planetselect][solutionselect]['Mstar'],
-            plDict[planetselect][solutionselect]['plx'],
-            Mp_is_Mpsini = plDict[planetselect][solutionselect]['Mp_is_Mpsini'])
-        if st.session_state.lim == 0:
-            lim = max(pl.seps_mean_params) + 0.3*max(pl.seps_mean_params)
-        else:
-            lim = st.session_state.lim
-        if np.any(np.isnan(lan)):
-            plot_aperture = False
-            plot_expected_position =  False
-        else:
-            plot_expected_position = True
-            plot_aperture = st.session_state.plot_aperture
-        fig, frac, stdev, meansep = MakePlot(pl, pl.date_of_max_elongation, lim, 
-                        plot_expected_position = plot_expected_position, 
-                        plot_aperture = plot_aperture, 
-                        aperture_radius = st.session_state.aperture)
-        st.pyplot(fig)
+            pl = Planet(
+                plDict[planetselect][solutionselect]['sma'],
+                plDict[planetselect][solutionselect]['ecc'],
+                plDict[planetselect][solutionselect]['inc'],
+                plDict[planetselect][solutionselect]['argp'],
+                plDict[planetselect][solutionselect]['lan'],
+                plDict[planetselect][solutionselect]['Period'],
+                plDict[planetselect][solutionselect]['t0'],
+                plDict[planetselect][solutionselect]['Mpsini'],
+                plDict[planetselect][solutionselect]['Mstar'],
+                plDict[planetselect][solutionselect]['plx'],
+                Mp_is_Mpsini = plDict[planetselect][solutionselect]['Mp_is_Mpsini'])
+            plot_expected_position =  True
+            if st.session_state.lim == 0:
+                lim = max(pl.seps_mean_params) + 0.3*max(pl.seps_mean_params)
+            else:
+                lim = st.session_state.lim
+            if st.session_state.date_max_elong2:
+                date = pl.date_of_max_elongation
+            else:
+                date = obsdate
+            fig, frac, stdev, meansep = MakePlot(pl, date, lim, 
+                    plot_expected_position = plot_expected_position, 
+                    plot_aperture = st.session_state.plot_aperture2, 
+                    aperture_radius = st.session_state.aperture2)
+            st.pyplot(fig)
+        
+        
 
         st.write('Fraction of points within aperture: {:.2f}'.format(frac))
         st.write('Ratio of std dev of separation of points from expected to expected separation: {:.2f}'.format(stdev/meansep))

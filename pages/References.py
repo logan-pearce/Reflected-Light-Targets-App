@@ -36,7 +36,8 @@ refDict = {
         'Trifonov+ 2018':"https://ui.adsabs.harvard.edu/abs/2018A%26A...609A.117T/abstract",
         'Feng+ 2017':"https://ui.adsabs.harvard.edu/abs/2017AJ....154..135F/abstract",
         'Burt+ 2021':"https://ui.adsabs.harvard.edu/abs/2021AJ....161...10B/abstract",
-        'Kaminski+ 2018':"https://ui.adsabs.harvard.edu/abs/2018A%26A...618A.115K/abstract"
+        'Kaminski+ 2018':"https://ui.adsabs.harvard.edu/abs/2018A%26A...618A.115K/abstract",
+        'Thompson+ 2025':'https://arxiv.org/abs/2502.20561'
     }
 df = pd.DataFrame({'Reference':refDict.keys(),'url':[refDict[key] for key in refDict.keys()]}
 )
