@@ -108,57 +108,63 @@ with rows[0]:
     with st.form("my_form"):
         
         collect_numbers = lambda x : [float(i) for i in re.split(",", x) if i != ""]
-
-        sma = st.text_input("sma [au]:", key='sma')
-        sma = collect_numbers(sma)
-
-        ecc = st.text_input("ecc:", key='ecc')
-        ecc = collect_numbers(ecc)
-
-        Period = st.text_input("period [days]:", key='period')
-        Period = collect_numbers(Period)
-
-        argp = st.text_input("planet argp [deg]:", key='argp')
-        argp = collect_numbers(argp)
-
-        incl = st.text_input("inc [deg]:", 'nan, nan', key='inc')
-        if incl == 'nan, nan' or incl == 'nan':
-            incl = np.nan
-        else:
-            incl = collect_numbers(incl)
-            if len(incl) == 1:
-                incl = incl[0]
-            else:
-                pass
-
-        lan = st.text_input("lan [deg]:", '0', key='lan')
-        if lan == 'nan':
-            lan = np.nan
-        else:
-            lan = collect_numbers(lan)
-            if len(lan) == 1:
-                lan = lan[0]
-            else:
-                pass
-
-        t0 = st.text_input("T0 [JD]:", key='t0')
-        t0 = collect_numbers(t0)
+        
 
         rows2 = st.columns((1,1))
         with rows2[0]:
+            sma = st.text_input("sma [au]:", key='sma')
+            sma = collect_numbers(sma)
+
+            ecc = st.text_input("ecc:", key='ecc')
+            ecc = collect_numbers(ecc)
+
+            Period = st.text_input("period [days]:", key='period')
+            Period = collect_numbers(Period)
+
+            argp = st.text_input("planet argp [deg]:", key='argp')
+            argp = collect_numbers(argp)
+
             Mpsini = st.text_input("planet mass [M_earth]:", key='Mpsini')
             Mpsini = collect_numbers(Mpsini)
+
+            plx = st.text_input("parallax [mas]:", key='plx')
+            plx = collect_numbers(plx)
+
         with rows2[1]:
+            t0 = st.text_input("T0 [JD]:", key='t0')
+            t0 = collect_numbers(t0)
+
+            incl = st.text_input("inc [deg]:", 'nan, nan', key='inc')
+            if incl == 'nan, nan' or incl == 'nan':
+                incl = np.nan
+            else:
+                incl = collect_numbers(incl)
+                if len(incl) == 1:
+                    incl = incl[0]
+                else:
+                    pass
+
+            lan = st.text_input("lan [deg]:", '0', key='lan')
+            if lan == 'nan':
+                lan = np.nan
+            else:
+                lan = collect_numbers(lan)
+                if len(lan) == 1:
+                    lan = lan[0]
+                else:
+                    pass
+
+            Mstar = st.text_input("Mstar [M_sun]:", key='Mstar')
+            Mstar = collect_numbers(Mstar)
+
             st.radio(
                 "Planet mass is Mp*sin(i)",
                 key="Mp_is_Mpsini",
                 options=[True, False], )
 
-        Mstar = st.text_input("Mstar [M_sun]:", key='Mstar')
-        Mstar = collect_numbers(Mstar)
 
-        plx = st.text_input("parallax [mas]:", key='plx')
-        plx = collect_numbers(plx)
+            dec = st.text_input("Declination [decimal deg]:", key='dec')
+            dec = collect_numbers(dec)
 
         rows2 = st.columns((1,1))
         with rows2[0]:
@@ -174,15 +180,16 @@ with rows[0]:
         with rows3[0]:
             lim = st.number_input("Plot axes limit [mas]:", key='lim', step=1)
             st.radio(
-                "Plot expected position",
-                key="plot_exp_pos",
+                "Plot aperture",
+                key="plot_aperture",
                 options=[True, False], )
             
         with rows3[1]:
             st.radio(
-                "Plot aperture",
-                key="plot_aperture",
+                "Plot expected position",
+                key="plot_exp_pos",
                 options=[True, False], )
+            
             aperture = st.selectbox(
                 "Aperture size",
                 ("GMT", "ELT", "Mag"),
@@ -198,11 +205,11 @@ with rows[0]:
         submitted = st.form_submit_button("Submit")
         if submitted:
             with rows[1]:
-                pl = Planet(sma,ecc,incl,argp,lan,Period,t0,Mpsini,Mstar,plx,Mp_is_Mpsini = st.session_state.Mp_is_Mpsini)
+                pl = Planet(sma,ecc,incl,argp,lan,Period,t0,Mpsini,Mstar,plx,dec,Mp_is_Mpsini = st.session_state.Mp_is_Mpsini)
                 if st.session_state.date_max_elong:
                     date = pl.date_of_max_elongation
                 else:
-                    date = obsdate
+                    date = float(obsdate)
 
                 if st.session_state.lim == 0:
                     lim = max(pl.seps_mean_params) + 0.3*max(pl.seps_mean_params)
@@ -231,9 +238,7 @@ with rows[1]:
     st.write('#### Or select a planet and solution from the drop down menu:')
 
     from orbitdict import *
-
     
-
     planetselect = st.selectbox(
         "Select planet",
         ([key for key in plDict.keys()]),index=None,
@@ -284,6 +289,11 @@ with rows[1]:
                                 "Plot aperture",
                                 key="plot_aperture2",
                                 options=[True, False], )
+                else:
+                    st.radio(
+                                "Plot aperture",
+                                key="plot_aperture2",
+                                options=[True, False], )
             with rows6[1]:
                 aperture = st.selectbox(
                     "Aperture size",
@@ -314,6 +324,7 @@ with rows[1]:
                 plDict[planetselect][solutionselect]['Mpsini'],
                 plDict[planetselect][solutionselect]['Mstar'],
                 plDict[planetselect][solutionselect]['plx'],
+                plDict[planetselect][solutionselect]['dec'],
                 Mp_is_Mpsini = plDict[planetselect][solutionselect]['Mp_is_Mpsini'])
             if st.session_state.lim == 0:
                 lim = max(pl.seps_mean_params) + 0.3*max(pl.seps_mean_params)
@@ -322,7 +333,7 @@ with rows[1]:
             if st.session_state.date_max_elong2:
                 date = pl.date_of_max_elongation
             else:
-                date = obsdate
+                date = float(obsdate)
             if np.isnan(st.session_state.set_lan):
                 plot_expected_position = False
             else:
@@ -344,6 +355,7 @@ with rows[1]:
                 plDict[planetselect][solutionselect]['Mpsini'],
                 plDict[planetselect][solutionselect]['Mstar'],
                 plDict[planetselect][solutionselect]['plx'],
+                plDict[planetselect][solutionselect]['dec'],
                 Mp_is_Mpsini = plDict[planetselect][solutionselect]['Mp_is_Mpsini'])
             plot_expected_position =  True
             if st.session_state.lim == 0:
@@ -353,7 +365,7 @@ with rows[1]:
             if st.session_state.date_max_elong2:
                 date = pl.date_of_max_elongation
             else:
-                date = obsdate
+                date = float(obsdate)
             fig, frac, stdev, meansep = MakePlot(pl, date, lim, 
                     plot_expected_position = plot_expected_position, 
                     plot_aperture = st.session_state.plot_aperture2, 
@@ -375,7 +387,8 @@ with rows[1]:
         period [days]: """+str(plDict[planetselect][solutionselect]['Period'])+"""\n
         T0 [JD]: """+str(plDict[planetselect][solutionselect]['t0'])+"""\n
         Mstar [Msun]: """+str(plDict[planetselect][solutionselect]['Mstar'])+"""\n
-        plx [mas]: """+str(plDict[planetselect][solutionselect]['plx'])
+        plx [mas]: """+str(plDict[planetselect][solutionselect]['plx'])+"""\n
+        decl [deg]: """+str(plDict[planetselect][solutionselect]['dec'])
 
         import io
         img = io.BytesIO()
