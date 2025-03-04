@@ -137,5 +137,27 @@ plDict = {
                     'argp':[83,100], 'lan':[191,9], 'inc':[41,6], 't0':[2458126,1000], 
                     'Mstar':[0.820,0.02], 'plx':[310.577,0.1355],'dec':-9.45816,
                     'Mp_is_Mpsini':False}
+                },
+    '47 Uma c':{
+        'Gregory & Fischer 2010':{'sma':[3.6,0.1], 'Period':[2391,100], 'ecc':[0.098,0.1], 'Mpsini':[171.621,23],
+                    'argp':[115, 160], 'lan':0, 'inc':np.nan, 't0':[2452441, 825], 
+                    'Mstar':[1.06,0.13], 'plx':[72.45,0.15],'dec':40.4305009,
+                    'Mp_is_Mpsini':True},
+        'Wittenmyer+ 2007':{'sma':[7.73,0.58], 'Period':[7586,727], 'ecc':[0.005,0.0001], 'Mpsini':[425.87,69.92],
+                    'argp':[307, 0.000001], 'lan':0, 'inc':np.nan, 't0':[2452134,146], 
+                    'Mstar':[1.06,0.13], 'plx':[72.45,0.15],'dec':40.4305009,
+                    'Mp_is_Mpsini':True}
+                },
+    'HD 219134 h':{
+        'Vogt+ 2015':{'sma':[3.11,0.04], 'Period':[2247,43], 'ecc':[0.06,0.04], 'Mpsini':[0.34*u.Mjup.to(u.Mearth),
+                                                                                            0.02*u.Mjup.to(u.Mearth)],
+                    'argp':[(215+180)%360, 50], 'lan':0, 'inc':np.nan, 't0':[2448725,356], 
+                    'Mstar':[0.794,0.03], 'plx':[153.08,0.09],'dec':57.1696664,
+                    'Mp_is_Mpsini':True},
+        'Johnson+ 2016':{'sma':[3.00,0.06], 'Period':[2127,63], 'ecc':[0.06,0.0000001], 'Mpsini':[0.256*u.Mjup.to(u.Mearth),
+                                                                                            0.029*u.Mjup.to(u.Mearth)],
+                    'argp':[(106+180)%360, 73], 'lan':0, 'inc':np.nan, 't0':[2448725,356], 
+                    'Mstar':[0.794,0.03], 'plx':[153.08,0.09],'dec':57.1696664,
+                    'Mp_is_Mpsini':True},
                 }
     }

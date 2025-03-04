@@ -72,7 +72,7 @@ def GetOrbitLocOnDate(planet, obstime):
 
 def MakePlot(planet, date, lim, plot_expected_position = True, plot_aperture = True, aperture_radius = gmt_lod):
     points = OrbitSim(planet, date)
-    fig = MakeCloudPlot(points, lim = lim)
+    fig = MakeCloudPlot(planet, points, lim = lim, figsize = (9,7))
     ras1, decs1, seps1 = GetOrbitLocOnDate(planet, date)
     if plot_expected_position:
         fig.axes[0].scatter(ras1,decs1,
@@ -168,7 +168,11 @@ with rows[0]:
 
         rows2 = st.columns((1,1))
         with rows2[0]:
-            obsdate = st.text_input("Obs Date [decimalyear]:")
+            obsdate = st.text_input("Obs Date [decimalyear or YYYY-MM-DD]:")
+            if '-' in obsdate:
+                    from astropy.time import Time
+                    obsdate = Time(obsdate+'T00:00:00', format = 'isot')
+                    obsdate = obsdate.decimalyear
             
         with rows2[1]:
             st.radio(
@@ -238,7 +242,7 @@ with rows[1]:
     st.write('#### Or select a planet and solution from the drop down menu:')
 
     from orbitdict import *
-    
+
     planetselect = st.selectbox(
         "Select planet",
         ([key for key in plDict.keys()]),index=None,
@@ -266,7 +270,11 @@ with rows[1]:
         if solutionselect != None:
             rows5 = st.columns((1,1))
             with rows5[1]:
-                obsdate = st.text_input("Obs Date [decimalyear]:")
+                obsdate = st.text_input("Obs Date [decimalyear or YYYY-MM-DD]:")
+                if '-' in obsdate:
+                    from astropy.time import Time
+                    obsdate = Time(obsdate+'T00:00:00', format = 'isot')
+                    obsdate = obsdate.decimalyear
                 
             with rows5[0]:
                 st.radio(
