@@ -72,7 +72,7 @@ def GetOrbitLocOnDate(planet, obstime):
 
 def MakePlot(planet, date, lim, plot_expected_position = True, plot_aperture = True, aperture_radius = gmt_lod):
     points = OrbitSim(planet, date)
-    fig = MakeCloudPlot(planet, points, lim = lim, figsize = (9,7))
+    fig = MakeCloudPlot(points, lim = lim, figsize = (9,7))
     ras1, decs1, seps1 = GetOrbitLocOnDate(planet, date)
     if plot_expected_position:
         fig.axes[0].scatter(ras1,decs1,
@@ -162,10 +162,6 @@ with rows[0]:
                 key="Mp_is_Mpsini",
                 options=[True, False], )
 
-
-            dec = st.text_input("Declination [decimal deg]:", key='dec')
-            dec = collect_numbers(dec)
-
         rows2 = st.columns((1,1))
         with rows2[0]:
             obsdate = st.text_input("Obs Date [decimalyear or YYYY-MM-DD]:")
@@ -209,7 +205,7 @@ with rows[0]:
         submitted = st.form_submit_button("Submit")
         if submitted:
             with rows[1]:
-                pl = Planet(sma,ecc,incl,argp,lan,Period,t0,Mpsini,Mstar,plx,dec,Mp_is_Mpsini = st.session_state.Mp_is_Mpsini)
+                pl = Planet(sma,ecc,incl,argp,lan,Period,t0,Mpsini,Mstar,plx,Mp_is_Mpsini = st.session_state.Mp_is_Mpsini)
                 if st.session_state.date_max_elong:
                     date = pl.date_of_max_elongation
                 else:
@@ -332,7 +328,6 @@ with rows[1]:
                 plDict[planetselect][solutionselect]['Mpsini'],
                 plDict[planetselect][solutionselect]['Mstar'],
                 plDict[planetselect][solutionselect]['plx'],
-                plDict[planetselect][solutionselect]['dec'],
                 Mp_is_Mpsini = plDict[planetselect][solutionselect]['Mp_is_Mpsini'])
             if st.session_state.lim == 0:
                 lim = max(pl.seps_mean_params) + 0.3*max(pl.seps_mean_params)
@@ -363,7 +358,6 @@ with rows[1]:
                 plDict[planetselect][solutionselect]['Mpsini'],
                 plDict[planetselect][solutionselect]['Mstar'],
                 plDict[planetselect][solutionselect]['plx'],
-                plDict[planetselect][solutionselect]['dec'],
                 Mp_is_Mpsini = plDict[planetselect][solutionselect]['Mp_is_Mpsini'])
             plot_expected_position =  True
             if st.session_state.lim == 0:
