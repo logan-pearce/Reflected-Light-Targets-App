@@ -10,3 +10,4 @@ astroquery
 projecc==1.1.5
 photutils
 scipy
+latex
