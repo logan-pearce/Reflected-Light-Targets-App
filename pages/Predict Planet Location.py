@@ -78,7 +78,7 @@ def MakePlot(planet, date, lim, plot_expected_position = True, plot_aperture = T
     mpl.rcParams['axes.labelsize'] = 20.0
     mpl.rcParams['axes.linewidth'] = 1.2
     mpl.rcParams['font.family'] = 'serif'
-    mpl.rcParams['text.usetex'] = True
+    #mpl.rcParams['text.usetex'] = True
     mpl.rcParams['xtick.labelsize'] = 18.0
     mpl.rcParams['ytick.labelsize'] = 18.0
 
