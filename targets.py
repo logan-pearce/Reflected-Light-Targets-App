@@ -310,12 +310,14 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     AgSlider.js_on_change('value', CustomJS(args=slider_args2,code=sliders_callback_code))
     LambdaSlider.js_on_change('value', CustomJS(args=slider_args2,code=sliders_callback_code))
     DSlider.js_on_change('value', CustomJS(args=slider_args2,code=sliders_callback_code))
+    try:
+        slider_args3 = dict(source=datapoints, Ag=AgSlider, Lambda=LambdaSlider, D=DSlider)
 
-    slider_args3 = dict(source=datapoints, Ag=AgSlider, Lambda=LambdaSlider, D=DSlider)
-
-    AgSlider.js_on_change('value', CustomJS(args=slider_args3,code=sliders_callback_code))
-    LambdaSlider.js_on_change('value', CustomJS(args=slider_args3,code=sliders_callback_code))
-    DSlider.js_on_change('value', CustomJS(args=slider_args3,code=sliders_callback_code))
+        AgSlider.js_on_change('value', CustomJS(args=slider_args3,code=sliders_callback_code))
+        LambdaSlider.js_on_change('value', CustomJS(args=slider_args3,code=sliders_callback_code))
+        DSlider.js_on_change('value', CustomJS(args=slider_args3,code=sliders_callback_code))
+    except UnboundLocalError:
+        pass
 
     st.bokeh_chart(column(p, row(AgSlider),row(LambdaSlider),row(DSlider)), use_container_width=True)
     #st.bokeh_chart(p, use_container_width=True)
