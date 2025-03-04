@@ -72,6 +72,16 @@ def GetOrbitLocOnDate(planet, obstime):
 
 def MakePlot(planet, date, lim, plot_expected_position = True, plot_aperture = True, aperture_radius = gmt_lod):
     points = OrbitSim(planet, date)
+    # set up some plotting parameters:
+    import matplotlib as mpl
+    mpl.rcParams['axes.titlesize'] = 20.0
+    mpl.rcParams['axes.labelsize'] = 20.0
+    mpl.rcParams['axes.linewidth'] = 1.2
+    mpl.rcParams['font.family'] = 'serif'
+    mpl.rcParams['text.usetex'] = True
+    mpl.rcParams['xtick.labelsize'] = 18.0
+    mpl.rcParams['ytick.labelsize'] = 18.0
+
     fig = MakeCloudPlot(points, lim = lim, figsize = (9,7))
     ras1, decs1, seps1 = GetOrbitLocOnDate(planet, date)
     if plot_expected_position:
