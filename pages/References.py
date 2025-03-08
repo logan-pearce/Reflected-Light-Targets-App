@@ -48,4 +48,4 @@ df = pd.DataFrame({'Reference':refDict.keys(),'url':[refDict[key] for key in ref
 df = df.sort_values('Reference')
 df = df.reset_index(drop=True)
 
-st.dataframe(df, column_config={"url": st.column_config.LinkColumn()})
+st.dataframe(df, column_config={"url": st.column_config.LinkColumn()}, width=700, height=900, hide_index=True)

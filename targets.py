@@ -36,13 +36,11 @@ st.markdown(
 
     <---- The "Predict Planet Location" tab uses the [`projecc`](https://github.com/logan-pearce/projecc) package to turn literature orbit solutions into a prediction of planet location in the sky plane at a specified date.
 
-    You can also select objects using the SQL interface which will automatically update the plot.:
+    You can also select objects using the SQL interface which will automatically update the plot. 
+    
+    <---- Details and examples of SQL queries and planet orbits in the Read Me tab
 """
 )
-
-''' For Example: Select planets with radius less than 5 Rearth accessible from the GMT site: '''
-strg = "SELECT * FROM targets WHERE PlanetRadiuse < 5 AND dec < 20 AND dec > -65"
-st.code(strg, language="sql")
 
 import sqlite3
 import pandas as pd
@@ -101,7 +99,7 @@ def GetPointsWithinARegion(xdata, ydata, points):
 
 def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_curve = None):
     rad = session_state['db']['PlanetRadiuse'].copy()
-    spt = session_state['db']['SpT Number'].copy()
+    spt = session_state['db']['SpTNumber'].copy()
     plotx = session_state['db']['MaxProjectedSeparation_lod_gmagaox']
     ploty = session_state['db']['ContrastAtMaxProj']
     phases = session_state['db']['PhaseAtMaxProj']
@@ -237,22 +235,22 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
         
         p.line(np.array(cont_curve[:,0]),cont_curve[:,1])
     
-        points = GetPointsWithinARegion(data.data['plotx'], data.data['ploty'], cont_curve)
-        datadfpoints = pd.DataFrame(data={'plotx':plotx[points], 'ploty':ploty[points], 'markersize':rad[points]*multiplier,
-                                          'phases':phases[points], 'color':spt[points], 
-                                   'name':session_state['db']['pl_name'][points], 'rad':rad[points], 
-                                   'spt':spt[points], 'dist':session_state['db']['sy_dist'][points],
-                                    'phases':phases[points], 'plotx_og':plotx[points], 'ploty_og':ploty[points], 'iwa': 2, 
-                                    'sepau':sepau[points], 'sepmas':sepmas[points], 'dec':session_state['db']['dec'][points], 
-                                    'starteff':session_state['db']['StarTeff'][points],
-                                    'masse':session_state['db']['pl_bmasse'][points],'period':session_state['db']['pl_orbper'][points],
-                                    'sep_elt':sep_elt[points], 'sep_mag':sep_mag[points],'stargaiamag':session_state['db']['sy_gaiamag'][points]
-                                   })
-        datadfpoints = datadfpoints.reset_index(drop=True)
-        datadfpointsdict = datadfpoints.to_dict(orient = 'list')
-        datapoints=ColumnDataSource(data=datadfpointsdict)
-        p.scatter('plotx','ploty', source=datapoints, fill_alpha=1, size='markersize', 
-                 line_color='black', color=None, line_width=2)
+        # points = GetPointsWithinARegion(data.data['plotx'], data.data['ploty'], cont_curve)
+        # datadfpoints = pd.DataFrame(data={'plotx':plotx[points], 'ploty':ploty[points], 'markersize':rad[points]*multiplier,
+        #                                   'phases':phases[points], 'color':spt[points], 
+        #                            'name':session_state['db']['pl_name'][points], 'rad':rad[points], 
+        #                            'spt':spt[points], 'dist':session_state['db']['sy_dist'][points],
+        #                             'phases':phases[points], 'plotx_og':plotx[points], 'ploty_og':ploty[points], 'iwa': 2, 
+        #                             'sepau':sepau[points], 'sepmas':sepmas[points], 'dec':session_state['db']['dec'][points], 
+        #                             'starteff':session_state['db']['StarTeff'][points],
+        #                             'masse':session_state['db']['pl_bmasse'][points],'period':session_state['db']['pl_orbper'][points],
+        #                             'sep_elt':sep_elt[points], 'sep_mag':sep_mag[points],'stargaiamag':session_state['db']['sy_gaiamag'][points]
+        #                            })
+        # datadfpoints = datadfpoints.reset_index(drop=True)
+        # datadfpointsdict = datadfpoints.to_dict(orient = 'list')
+        # datapoints=ColumnDataSource(data=datadfpointsdict)
+        # p.scatter('plotx','ploty', source=datapoints, fill_alpha=1, size='markersize', 
+        #          line_color='black', color=None, line_width=2)
 
 
     p.xaxis.axis_label = xaxis_label
