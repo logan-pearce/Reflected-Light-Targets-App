@@ -365,5 +365,4 @@ if session_state['cont_curve'] == None:
     MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_curve = session_state['cont_curve'])
 else:
     pass
-st.write('test')
     
