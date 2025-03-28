@@ -147,4 +147,6 @@ if st.session_state.show_example1:
 '''
  Once submitted, `projecc` will compute 100,000 simulated realizations of the planet's position on that date and display a plot on the right hand side, color coded by viewing phase. The fraction of points within an aperture and the spread of the points, as well as the orbital parameter values, are displayed below the plot, along with a button for saving this figure if desired.
 
+ We provide two summary statistics to quantify the confidence in locating a planet with a given literature solution. If selected, `projecc` will place an aperture at the expected location on the date specified, and display the fraction of simulated points within the aperture; a higher fraction is a more tightly constrained prediction. We also quantify the standard deviation of separations of simulated points and normalize the standard deviation by the expected separation; a lower number indicates points are more closely constrained to the expected separation. These statistics will be displayed only if "Plot aperture" is selected.
+
 '''

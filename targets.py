@@ -226,8 +226,8 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     if cont_curve is None:
         pass
     else:
-        gmt_lod = (0.2063 * 0.8 / 24.5) * 1000
-        cont_curve[0] = [cont_curve[0][i]/gmt_lod for i in range(len(cont_curve[0]))]
+        #gmt_lod = (0.2063 * 0.8 / 24.5) * 1000
+        #cont_curve[0] = [cont_curve[0][i]/gmt_lod for i in range(len(cont_curve[0]))]
         cont_curve[0].append(max(data.data['plotx']))
         cont_curve[0].append(max(data.data['plotx']))
         cont_curve[0] = [cont_curve[0][0]] + cont_curve[0]
@@ -342,7 +342,7 @@ if st.session_state.show_text:
      milliarcseconds and a list of flux contrast values, separated by commas. '''
     row_input = st.columns((1,1))
     with row_input[0]:
-        cont_curve_seps = st.text_input(r"$\textsf{\Large Separation [mas]}$",key='cont_curve_seps')
+        cont_curve_seps = st.text_input(r"$\textsf{\Large Separation [\lambda/D]}$",key='cont_curve_seps')
     with row_input[1]:
         cont_curve_flux = st.text_input(r"$\textsf{\Large Flux contrast}$",key='cont_curve_flux')
     
