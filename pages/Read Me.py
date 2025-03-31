@@ -74,7 +74,7 @@ if st.session_state.show_text:
         st.code(strg, language="sql")
 
         ''' #### Select all the tau Ceti planets: '''
-        strg = 'select * from targets where pl_name like "%tau Cet%"'
+        strg = 'SELECT * FROM targets WHERE pl_name LIKE "%tau Cet%"'
         st.code(strg, language="sql")
 
     with rows[1]:
