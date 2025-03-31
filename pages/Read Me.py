@@ -73,6 +73,10 @@ if st.session_state.show_text:
         strg = "SELECT * FROM targets WHERE PlanetRadiuse < 5 AND dec < 20 AND dec > -65"
         st.code(strg, language="sql")
 
+        ''' #### Select all the tau Ceti planets: '''
+        strg = 'select * from targets where pl_name like "%tau Cet%"'
+        st.code(strg, language="sql")
+
     with rows[1]:
         '''Database Columns'''
         db = pd.read_csv('Target-list-with-orbital-params.csv')
