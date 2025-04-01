@@ -391,7 +391,7 @@ with rows[1]:
             st.pyplot(fig)
         
         
-
+        
         st.write('Fraction of points within aperture: {:.2f}'.format(frac))
         st.write('Ratio of std dev of separation of points from expected to expected separation: {:.2f}'.format(stdev/meansep))
         keys = [key for key in plDict[planetselect][solutionselect].keys()]
