@@ -117,9 +117,43 @@ plDict = {
                     },
     'tau Cet g':{
         'Feng+ 2017':{'sma':[0.133,0.02], 'Period':[20,0.01], 'ecc':[0.06,0.03], 'Mpsini':[1.75,0.25],
-                    'argp':[215.34,2.86], 'lan':0, 'inc':np.nan, 't0':[2453497.50, 0.16], 
-                    'Mstar':[0.3783,0.012], 'plx':[277.5,0.5],'dec':-15.933680,
-                    'Mp_is_Mpsini':True}
+                    'argp':[215.34,2.86], 'lan':0, 'inc':np.nan, 't0':[2453591.34, 0.16], 
+                    'Mstar':[0.78,0.12], 'plx':[273.8097,0.1701],'dec':-15.933680,
+                    'Mp_is_Mpsini':True, 'Note': 'Pub. uncert. represents 1-99\% intervals'},
+        'Feng+ 2017 w/ disk incl':{'sma':[0.133,0.02], 'Period':[20,0.01], 'ecc':[0.06,0.03], 'Mpsini':[1.75,0.25],
+                    'argp':[215.34,2.86], 'lan':0, 'inc':[35,10], 't0':[2453591.34, 0.16], 
+                    'Mstar':[0.78,0.12], 'plx':[273.8097,0.1701],'dec':-15.933680,
+                    'Mp_is_Mpsini':True, 'Note': 'Pub. uncert. represents 1-99\% intervals, assumes planets are aligned with observed debris disk'}
+                    },
+    'tau Cet h':{
+        'Feng+ 2017':{'sma':[0.243,0.003], 'Period':[49.41,0.1], 'ecc':[0.23,0.15], 'Mpsini':[1.83,0.3],
+                    'argp':[187, 40], 'lan':0, 'inc':np.nan, 't0':[2453603.88, 4.47], 
+                    'Mstar':[0.78,0.12], 'plx':[273.8097,0.1701],'dec':-15.933680,
+                    'Mp_is_Mpsini':True, 'Note': 'Pub. uncert. represents 1-99\% intervals'},
+        'Feng+ 2017 w/ disk incl':{'sma':[0.243,0.003], 'Period':[49.41,0.1], 'ecc':[0.23,0.15], 'Mpsini':[1.83,0.3],
+                    'argp':[187, 40], 'lan':0, 'inc':[35,10], 't0':[2453603.88, 4.47],
+                    'Mstar':[0.78,0.12], 'plx':[273.8097,0.1701],'dec':-15.933680,
+                    'Mp_is_Mpsini':True, 'Note': 'Pub. uncert. represents 1-99\% intervals, assumes planets are aligned with observed debris disk'}
+                    },
+    'tau Cet e':{
+        'Feng+ 2017':{'sma':[0.538,0.06], 'Period':[162.87,0.5], 'ecc':[0.18,0.14], 'Mpsini':[3.93,0.7],
+                    'argp':[202.35, 45], 'lan':0, 'inc':np.nan, 't0':[2453432.45, 26.23], 
+                    'Mstar':[0.78,0.12], 'plx':[273.8097,0.1701],'dec':-15.933680,
+                    'Mp_is_Mpsini':True, 'Note': 'Pub. uncert. represents 1-99\% intervals'},
+        'Feng+ 2017 w/ disk incl':{'sma':[0.538,0.06], 'Period':[162.87,0.5], 'ecc':[0.18,0.14], 'Mpsini':[3.93,0.7],
+                    'argp':[202.35, 45], 'lan':0, 'inc':[35,10], 't0':[2453432.45, 26.23],
+                    'Mstar':[0.78,0.12], 'plx':[273.8097,0.1701],'dec':-15.933680,
+                    'Mp_is_Mpsini':True, 'Note': 'Pub. uncert. represents 1-99\% intervals, assumes planets are aligned with observed debris disk'}
+                    },
+    'tau Cet f':{
+        'Feng+ 2017':{'sma':[1.334, 0.017], 'Period':[636.13, 11.7], 'ecc':[0.16,0.07], 'Mpsini':[3.93, 1.0],
+                    'argp':[299.74, 40], 'lan':0, 'inc':np.nan, 't0':[2453663.6, 63.8], 
+                    'Mstar':[0.78,0.12], 'plx':[273.8097,0.1701],'dec':-15.933680,
+                    'Mp_is_Mpsini':True, 'Note': 'Pub. uncert. represents 1-99\% intervals'},
+        'Feng+ 2017 w/ disk incl':{'sma':[1.334, 0.017], 'Period':[636.13, 11.7], 'ecc':[0.16,0.07], 'Mpsini':[3.93, 1.0],
+                    'argp':[299.74, 40], 'lan':0, 'inc':[35,10], 't0':[2453663.6, 63.8], 
+                    'Mstar':[0.78,0.12], 'plx':[273.8097,0.1701],'dec':-15.933680,
+                    'Mp_is_Mpsini':True, 'Note': 'Pub. uncert. represents 1-99\% intervals, assumes planets are aligned with observed debris disk'}
                     },
     'HD 180617 b':{
         'Burt+ 2021':{'sma':[0.343,0.004], 'Period':[105.911,0.109], 'ecc':[0.101,0.053], 'Mpsini':[12.214,1.05],

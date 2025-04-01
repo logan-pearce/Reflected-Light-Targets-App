@@ -394,6 +394,9 @@ with rows[1]:
 
         st.write('Fraction of points within aperture: {:.2f}'.format(frac))
         st.write('Ratio of std dev of separation of points from expected to expected separation: {:.2f}'.format(stdev/meansep))
+        keys = [key for key in plDict[planetselect][solutionselect].keys()]
+        if 'Note' in keys:
+            st.write('Note: '+plDict[planetselect][solutionselect]['Note'])
 
         """
         Mp/Mpsini [Mearth]: """+str(plDict[planetselect][solutionselect]['Mpsini'])+"""\n
