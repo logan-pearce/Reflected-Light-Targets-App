@@ -420,7 +420,7 @@ with rows[1]:
             data=img,
             file_name='figure.png',
             mime="image/png"
-    )
+        )
 
 
 
