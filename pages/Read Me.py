@@ -23,8 +23,8 @@ rows1 = st.columns((1,1))
 with rows1[0]:
     """
     #### Citation
-    If you use `projecc` or this app please cite Pearce, Males, and Limbach (2025, submitted to PASP). <br>
-    <a href="https://doi.org/10.5281/zenodo.15829821"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.15829821.svg" alt="DOI"></a>
+    If you use `projecc` or this app please cite Pearce, Males, and Limbach (2025, submitted to PASP)."""
+    st.html( <a href="https://doi.org/10.5281/zenodo.15829821"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.15829821.svg" alt="DOI"></a>) """
 
 
 
