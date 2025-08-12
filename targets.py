@@ -49,7 +49,7 @@ st.markdown(
     
     <---- Details and examples of SQL queries and planet orbits in the Read Me tab
 
-    ## Collaborators welcome and wanted!
+    ### Collaborators welcome and wanted!
     Please email lapearce@umich.edu
 """
 )
