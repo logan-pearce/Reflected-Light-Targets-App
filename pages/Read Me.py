@@ -35,7 +35,9 @@ with rows1[0]:
 with rows1[1]:
     '''
     #### Future Upgrades
-    - Permit asymmetric uncertainties and correlation matricies
+    - Permit asymmetric uncertainties and correlation matricies; interface with orbit fitter outputs like orbitize!
+    - Overlay dark hole regions and compute fraction of points within dark hole
+    - Compounding errors over time
     '''
 
 """
