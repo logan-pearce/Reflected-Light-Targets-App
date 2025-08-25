@@ -214,27 +214,32 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
 
     keys = [key for key in plDict.keys() if '---' not in key]
     names = np.array(data.data['name'])
-    try:
-        ind = []
-        for key in keys:
-            ind.append(int(np.where(names == key)[0][0]))
-        datadfpoints = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
-                                            'phases':phases[ind], 'color':spt[ind], 
-                                    'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
-                                    'spt':spt[ind], 'dist':session_state['db']['sy_dist'][ind],
-                                        'phases':phases[ind], 'plotx_og':plotx[ind], 'ploty_og':ploty[ind], 'iwa': 2, 
-                                        'sepau':sepau[ind], 'sepmas':sepmas[ind], 'dec':session_state['db']['dec'][ind], 
-                                        'starteff':session_state['db']['StarTeff'][ind],
-                                        'masse':session_state['db']['pl_bmasse'][ind],'period':session_state['db']['pl_orbper'][ind],
-                                        'sep_elt':sep_elt[ind], 'sep_mag':sep_mag[ind],'stargaiamag':session_state['db']['sy_gaiamag'][ind]
-                                    })
-        datadfpoints = datadfpoints.reset_index(drop=True)
-        datadfpointsdict = datadfpoints.to_dict(orient = 'list')
-        datapoints=ColumnDataSource(data=datadfpointsdict)
-        p.scatter('plotx','ploty', source=datapoints, fill_alpha=1, size='markersize', 
-                    line_color='orangered', color=None, line_width=2)
-    except IndexError:
-        pass
+    print(names)
+    
+    #try:
+    ind = np.array([], dtype=int)
+    for key in keys:
+        try:
+            ind = np.append(ind,int(np.where(names == key)[0][0]))
+        except IndexError:
+            pass
+    datadfpoints = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
+                                        'phases':phases[ind], 'color':spt[ind], 
+                                'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
+                                'spt':spt[ind], 'dist':session_state['db']['sy_dist'][ind],
+                                    'phases':phases[ind], 'plotx_og':plotx[ind], 'ploty_og':ploty[ind], 'iwa': 2, 
+                                    'sepau':sepau[ind], 'sepmas':sepmas[ind], 'dec':session_state['db']['dec'][ind], 
+                                    'starteff':session_state['db']['StarTeff'][ind],
+                                    'masse':session_state['db']['pl_bmasse'][ind],'period':session_state['db']['pl_orbper'][ind],
+                                    'sep_elt':sep_elt[ind], 'sep_mag':sep_mag[ind],'stargaiamag':session_state['db']['sy_gaiamag'][ind]
+                                })
+    datadfpoints = datadfpoints.reset_index(drop=True)
+    datadfpointsdict = datadfpoints.to_dict(orient = 'list')
+    datapoints=ColumnDataSource(data=datadfpointsdict)
+    p.scatter('plotx','ploty', source=datapoints, fill_alpha=1, size='markersize', 
+                line_color='orangered', color=None, line_width=2)
+    # except IndexError:
+    #     pass
 
     if cont_curve is None:
         pass
