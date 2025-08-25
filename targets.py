@@ -214,7 +214,6 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
 
     keys = [key for key in plDict.keys() if '---' not in key]
     names = np.array(data.data['name'])
-    print(names)
     
     #try:
     ind = np.array([], dtype=int)
