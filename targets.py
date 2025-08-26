@@ -38,11 +38,11 @@ with header[1]:
     h2 = st.columns((1,1,1))
     with h2[1]:
         st.write('### Get a GRIP on your targets!')
-        st.write(':new_moon: :waxing_crescent_moon: :first_quarter_moon: :moon: :waxing_gibbous_moon: :full_moon: :waning_gibbous_moon: :last_quarter_moon: :waning_crescent_moon: :new_moon:')
+        st.write(':new_moon: :waxing_crescent_moon: :first_quarter_moon: :waxing_gibbous_moon: :full_moon: :waning_gibbous_moon: :last_quarter_moon: :waning_crescent_moon: :new_moon:')
 
 st.markdown(
     """
-    This plot shows 100s of the nearest ($<$70 pc) known RV-detected planets in the [Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/) (as of Feb 2025), plotted as a function of separation, contrast, and phase for GMagAO-X on the GMT.  For planets without inclinitation values in the Archive, we used inclination = $60^{o}$, the average inclination for a uniform half-sphere.  If radius was not available in the Exoplanet Archive, we used a [Mass/Radius relation](https://github.com/logan-pearce/Reflected-Light/blob/main/Jareds-planet-mass-radius-daig.pdf); if mass was not available we used Msini.  Separation is in units of $\lambda/D$, the fundamental length scale for direct imaging (1 $\lambda/D$ ~ FWHM of PSF core). Contrast shown here is the reflected light only contrast for a uniform Lambertian sphere at the physical separation, phase, uniform albedo, and radius in the database; no albedo variation with wavelength or thermal emission is incorporated here.
+    This plot shows 100s of the nearest ($<$70 pc) known RV-detected planets in the [Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/) (as of Feb 2025), plotted as a function of separation, contrast, and phase for GMagAO-X on the GMT.  For planets without inclinitation values in the Archive, we used inclination = $60^{o}$, the average inclination for a uniform half-sphere.  If radius was not available in the Exoplanet Archive, we used a [Mass/Radius relation](https://github.com/logan-pearce/Reflected-Light/blob/main/Jareds-planet-mass-radius-daig.pdf); if mass was not available we used Msini.  Separation is in units of $\\lambda/D$, the fundamental length scale for direct imaging (1 $\\lambda/D$ ~ FWHM of PSF core). Contrast shown here is the reflected light only contrast for a uniform Lambertian sphere at the physical separation, phase, uniform albedo, and radius in the database; no albedo variation with wavelength or thermal emission is incorporated here.
 
     <---- Details of how this target list was compiled, assumptions made, and notebooks for generating this list yourself are in the "Derivations" tab.
 
@@ -125,7 +125,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     sepau = np.array(session_state['db']['MaxProjectedSeparation_au'])
     sepmas = np.array(session_state['db']['MaxProjectedSeparation_mas'])
     filt = 'i'
-    xaxis_label = r'\[ \mathrm{Max\; Projected\; Separation}\; [\lambda/D]\]'
+    xaxis_label = r'\[ \mathrm{Max\; Projected\; Separation}\; [\\lambda/D]\]'
     annotation_text = ''
     IWA = 2
     ytop = 6e-6
