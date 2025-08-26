@@ -11,11 +11,11 @@ from orbitdict import *
 
 st.set_page_config(
         page_title="Ground-based Reflected Light Imaging Planner",
-        page_icon="images/grip.png",
+        page_icon="images/grip-offwhite.png",
         layout="wide",
     )
 
-sidebar_logo = 'images/grip-white-outline2.png'
+sidebar_logo = 'images/grip-offwhite.png'
 st.logo(sidebar_logo, size='large')
 
 
