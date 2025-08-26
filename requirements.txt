@@ -1,6 +1,6 @@
 setuptools
 streamlit==1.48.1
-SQLAlchemy==2.0.27
+SQLAlchemy==2.0.43
 pandas
 numpy==1.23.1
 matplotlib
