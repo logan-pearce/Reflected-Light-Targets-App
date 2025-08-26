@@ -11,4 +11,3 @@ projecc
 photutils
 scipy
 latex
-distutils
