@@ -9,12 +9,12 @@ import re
 
 
 st.set_page_config(
-        page_title="Reflected Light Planets",
-        page_icon="images/star-only-orange-transp.png",
+        page_title="Ground-based Reflected Light Imaging Planner",
+        page_icon="images/grip-offwhite.png",
         layout="wide",
     )
 
-sidebar_logo = 'images/star-only-orange-transp.png'
+sidebar_logo = 'images/grip-offwhite.png'
 st.logo(sidebar_logo, size='large')
 
 left_co, cent_co,last_co = st.columns(3)
