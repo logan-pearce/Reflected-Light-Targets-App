@@ -359,7 +359,7 @@ if st.session_state.show_text:
      milliarcseconds and a list of flux contrast values, separated by commas. '''
     row_input = st.columns((1,1))
     with row_input[0]:
-        cont_curve_seps = st.text_input(r"$\textsf{\Large Separation [lambda/D]}$",key='cont_curve_seps')
+        cont_curve_seps = st.text_input(r"$\textsf{\Large Separation [\\lambda/D]}$",key='cont_curve_seps')
     with row_input[1]:
         cont_curve_flux = st.text_input(r"$\textsf{\Large Flux contrast}$",key='cont_curve_flux')
     
