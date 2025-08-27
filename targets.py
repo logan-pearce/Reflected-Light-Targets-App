@@ -125,7 +125,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     sepau = np.array(session_state['db']['MaxProjectedSeparation_au'])
     sepmas = np.array(session_state['db']['MaxProjectedSeparation_mas'])
     filt = 'i'
-    xaxis_label = r'\[ \mathrm{Max\; Projected\; Separation}\; [\\lambda/D]\]'
+    xaxis_label = r'\[ \mathrm{Max\; Projected\; Separation}\; [$\\lambda$/D]\]'
     annotation_text = ''
     IWA = 2
     ytop = 6e-6
