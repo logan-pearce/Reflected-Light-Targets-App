@@ -15,9 +15,7 @@ st.sidebar.write("""<div style="width:100%;text-align:center;"><a href="https://
 header = st.columns((1,3,1))
 with header[1]:
     st.title('Reflected Light Planets with projecc')
-header2 = st.columns((1,3,1))
-with header2[1]:
-    st.write(':new_moon: :waxing_crescent_moon: :first_quarter_moon: :moon: :waxing_gibbous_moon: :full_moon: :waning_gibbous_moon: :last_quarter_moon: :waning_crescent_moon: :new_moon:  :waxing_crescent_moon: :first_quarter_moon: :moon: :waxing_gibbous_moon: :full_moon: :waning_gibbous_moon: :last_quarter_moon: :waning_crescent_moon: :new_moon:  :waxing_crescent_moon: :first_quarter_moon: :moon: :waxing_gibbous_moon: :full_moon: :waning_gibbous_moon: :last_quarter_moon: :waning_crescent_moon: :new_moon:  :waxing_crescent_moon: :first_quarter_moon: :moon: :waxing_gibbous_moon: :full_moon: :waning_gibbous_moon: :last_quarter_moon: :waning_crescent_moon: :new_moon:  :waxing_crescent_moon: :first_quarter_moon: :moon: :waxing_gibbous_moon: :full_moon: :waning_gibbous_moon: :last_quarter_moon: :waning_crescent_moon: :new_moon:  ')
+
 
 rows1 = st.columns((1,1))
 with rows1[0]:
