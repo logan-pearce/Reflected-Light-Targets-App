@@ -50,7 +50,7 @@ st.markdown(
     
     Planets highlighted in orange have orbit solutions in the "Predict Planet Location" tab.
 
-    <---- The "Predict Planet Location" tab uses the [`projecc`](https://github.com/logan-pearce/projecc) package to turn literature orbit solutions into a prediction of planet location in the sky plane at a specified date.
+    <---- The "Predict Planet Location" tab uses the [`projecc`](https://github.com/logan-pearce/projecc) package to turn literature orbit solutions into a prediction of planet location in the sky plane at a specified date. [`See the paper for more`](https://ui.adsabs.harvard.edu/abs/2025PASP..137i4401P/abstract)
 
     You can also select objects using the SQL interface which will automatically update the plot. 
     
