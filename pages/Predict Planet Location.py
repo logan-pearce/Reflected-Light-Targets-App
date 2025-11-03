@@ -34,6 +34,8 @@ with header[1]:
 Written by Logan Pearce, 2025
 https://github.com/logan-pearce/projecc; http://www.loganpearcescience.com
 
+If you use this in your work please cite [`Pearce, Males, & Limbach 2025`](https://ui.adsabs.harvard.edu/abs/2025PASP..137i4401P/abstract)
+
 '''
 gmt_lod = (0.2063 * 0.8 / 24.5) * 1000
 elt_lod = (0.2063 * 0.8 / 39) * 1000
