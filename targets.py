@@ -37,7 +37,7 @@ header = st.columns((1,4,1))
 with header[1]:
     h2 = st.columns((1,1,1))
     with h2[1]:
-        st.write('### Get a GRIP on your targets!')
+        # st.write('### Get a GRIP on your targets!')
         st.write(':new_moon: :waxing_crescent_moon: :first_quarter_moon: :waxing_gibbous_moon: :full_moon: :waning_gibbous_moon: :last_quarter_moon: :waning_crescent_moon: :new_moon:')
 
 st.markdown(
@@ -142,6 +142,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     mag_lod = 0.2063 * 0.8 / 6.5
     sep_elt = plotx*(gmt_lod/elt_lod)
     sep_mag = plotx*(gmt_lod/mag_lod)
+    session_state['db']['note'] = ''
     multiplier = 2
     datadf = pd.DataFrame(data={'plotx':plotx, 'ploty':ploty, 'color':spt, 'markersize':rad*multiplier,
                                 'name':session_state['db']['pl_name'], 'rad':rad, 'spt':spt, 'dist':session_state['db']['sy_dist'],
@@ -150,7 +151,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
                                 'starteff':session_state['db']['StarTeff'],
                                 'masse':session_state['db']['pl_bmasse'],
                                 'sep_elt':sep_elt, 'sep_mag':sep_mag, 'period':session_state['db']['pl_orbper'],
-                                'stargaiamag':session_state['db']['sy_gaiamag']
+                                'stargaiamag':session_state['db']['sy_gaiamag'], 'note':session_state['db']['note']
                                 })
     datadf = datadf.reset_index(drop=True)
     datadict = datadf.to_dict(orient = 'list')
@@ -188,7 +189,8 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
         ('SpT','@spt{0.0}'),
         ('Star Gaia G', '@stargaiamag{0.0}'),
         ('Dist [pc]','@dist{0.0}'),
-        ('Decl', '@dec{0.0}')
+        ('Decl', '@dec{0.0}'),
+        ('Note', '@note{0}')
     ]
 
     p = figure(width=900, height=750, y_axis_type="log", tools=tools, 
@@ -222,6 +224,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
             ind = np.append(ind,int(np.where(names == key)[0][0]))
         except IndexError:
             pass
+    session_state['db'].loc[ind,'note']='In Predict Planet Location'
     datadfpoints = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
                                         'phases':phases[ind], 'color':spt[ind], 
                                 'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
@@ -230,13 +233,44 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
                                     'sepau':sepau[ind], 'sepmas':sepmas[ind], 'dec':session_state['db']['dec'][ind], 
                                     'starteff':session_state['db']['StarTeff'][ind],
                                     'masse':session_state['db']['pl_bmasse'][ind],'period':session_state['db']['pl_orbper'][ind],
-                                    'sep_elt':sep_elt[ind], 'sep_mag':sep_mag[ind],'stargaiamag':session_state['db']['sy_gaiamag'][ind]
+                                    'sep_elt':sep_elt[ind], 'sep_mag':sep_mag[ind],'stargaiamag':session_state['db']['sy_gaiamag'][ind],
+                                    'note':session_state['db']['note'][ind]
                                 })
     datadfpoints = datadfpoints.reset_index(drop=True)
     datadfpointsdict = datadfpoints.to_dict(orient = 'list')
     datapoints=ColumnDataSource(data=datadfpointsdict)
     p.scatter('plotx','ploty', source=datapoints, fill_alpha=1, size='markersize', 
                 line_color='orangered', color=None, line_width=2)
+    # except IndexError:
+    #     pass
+
+    names = np.array(data.data['name'])
+    plandb = pd.read_csv('plandb.csv')
+    
+    #try:
+    ind = np.array([], dtype=int)
+    for name in plandb['pl_name']:
+        try:
+            ind = np.append(ind,int(np.where(names == name)[0][0]))
+        except IndexError:
+            pass
+    session_state['db'].loc[ind,'note']='In Imaging Mission Database'
+    datadfpoints2 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
+                                        'phases':phases[ind], 'color':spt[ind], 
+                                'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
+                                'spt':spt[ind], 'dist':session_state['db']['sy_dist'][ind],
+                                    'phases':phases[ind], 'plotx_og':plotx[ind], 'ploty_og':ploty[ind], 'iwa': 2, 
+                                    'sepau':sepau[ind], 'sepmas':sepmas[ind], 'dec':session_state['db']['dec'][ind], 
+                                    'starteff':session_state['db']['StarTeff'][ind],
+                                    'masse':session_state['db']['pl_bmasse'][ind],'period':session_state['db']['pl_orbper'][ind],
+                                    'sep_elt':sep_elt[ind], 'sep_mag':sep_mag[ind],'stargaiamag':session_state['db']['sy_gaiamag'][ind],
+                                    'note':session_state['db']['note'][ind]
+                                })
+    datadfpoints2 = datadfpoints2.reset_index(drop=True)
+    datadfpointsdict2 = datadfpoints2.to_dict(orient = 'list')
+    datapoints2=ColumnDataSource(data=datadfpointsdict2)
+    p.scatter('plotx','ploty', source=datapoints2, fill_alpha=1, size='markersize', 
+                line_color='red', color=None, line_width=2)
     # except IndexError:
     #     pass
 
