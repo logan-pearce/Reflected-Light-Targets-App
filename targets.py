@@ -190,7 +190,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
         ('Star Gaia G', '@stargaiamag{0.0}'),
         ('Dist [pc]','@dist{0.0}'),
         ('Decl', '@dec{0.0}'),
-        ('Note', '@note{0}')
+        ('Note', '@note')
     ]
 
     p = figure(width=900, height=750, y_axis_type="log", tools=tools, 
@@ -270,7 +270,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     datadfpointsdict2 = datadfpoints2.to_dict(orient = 'list')
     datapoints2=ColumnDataSource(data=datadfpointsdict2)
     p.scatter('plotx','ploty', source=datapoints2, fill_alpha=1, size='markersize', 
-                line_color='red', color=None, line_width=2)
+                line_color='goldenrod', color=None, line_width=2)
     # except IndexError:
     #     pass
 
