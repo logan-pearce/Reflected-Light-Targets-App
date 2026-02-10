@@ -325,7 +325,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     datadfpointsdict2 = datadfpoints2.to_dict(orient = 'list')
     datapoints2=ColumnDataSource(data=datadfpointsdict2)
     p.scatter('plotx','ploty', source=datapoints2, fill_alpha=1, size='markersize', 
-                line_color='grennyellow', color=None, line_width=2)
+                line_color='greenyellow', color=None, line_width=2)
 
     if cont_curve is None:
         pass
