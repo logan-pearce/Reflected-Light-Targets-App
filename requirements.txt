@@ -1,5 +1,5 @@
 setuptools
-streamlit==1.48.1
+streamlit
 SQLAlchemy==2.0.43
 pandas
 numpy==1.23.1
