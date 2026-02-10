@@ -490,9 +490,9 @@ else:
     pass
     
 
-st.write(
+st.html(
     """
-    <h2> Circles: </h2>
+    <h2> Circles: </h2><br>
     <span style="color:#FF4500">Orangered:</span> This planet has an orbit analysis in the "Predict Planet Location" tab
 
 """
