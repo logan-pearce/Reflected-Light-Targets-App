@@ -489,3 +489,11 @@ if session_state['cont_curve'] == None:
 else:
     pass
     
+
+st.write(
+    """
+    <h2> Circles: </h2>
+    <span style="color:#FF4500">Orangered:</span> This planet has an orbit analysis in the "Predict Planet Location" tab
+
+"""
+)
