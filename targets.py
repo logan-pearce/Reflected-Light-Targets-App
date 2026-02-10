@@ -273,7 +273,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
                 line_color='goldenrod', color=None, line_width=2)
     # except IndexError:
     #     pass
-    andes = ['Proxima b', 'GJ 273 b', 'Wolf 1061 c', 'GJ 682 b', 'Ross 128 b']
+    andes = ['Proxima Cen b', 'GJ 273 b', 'Wolf 1061 c', 'GJ 682 b', 'Ross 128 b']
 
     ind = np.array([], dtype=int)
     for name in andes:
@@ -281,7 +281,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
             ind = np.append(ind,int(np.where(names == name)[0][0]))
         except IndexError:
             pass
-    session_state['db'].loc[ind,'note']='In ELT-ANDES Golden Sample for Atm Characterization'
+    session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note'].append('\n In ELT-ANDES Golden Sample for Atm Characterization')
     datadfpoints2 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
                                         'phases':phases[ind], 'color':spt[ind], 
                                 'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
@@ -298,6 +298,34 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     datapoints2=ColumnDataSource(data=datadfpointsdict2)
     p.scatter('plotx','ploty', source=datapoints2, fill_alpha=1, size='markersize', 
                 line_color='darkviolet', color=None, line_width=2)
+    
+    venus = ['HD 20794 d', 'HD 219134 d', 'GJ 411 b', 'HD 219134 f', 'Proxima Cen d', 'Barnard e', 'Wolf 1061 c', 'GJ 15 A b',
+             'Gl 725 A b', 'GJ 273 b', 'Barnard c', 'GJ 1061 d', 'Ross 128 b', 'GJ 251 b', 'Barnard b', 'GJ 625 b', 'Barnard d', 
+             'L 98-59 f', 'GJ 1061 c', 'AU Mic d']
+
+    ind = np.array([], dtype=int)
+    for name in venus:
+        try:
+            ind = np.append(ind,int(np.where(names == name)[0][0]))
+        except IndexError:
+            pass
+    session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note'].append('\n In Kane+2026 Venus Zone')
+    datadfpoints2 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
+                                        'phases':phases[ind], 'color':spt[ind], 
+                                'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
+                                'spt':spt[ind], 'dist':session_state['db']['sy_dist'][ind],
+                                    'phases':phases[ind], 'plotx_og':plotx[ind], 'ploty_og':ploty[ind], 'iwa': 2, 
+                                    'sepau':sepau[ind], 'sepmas':sepmas[ind], 'dec':session_state['db']['dec'][ind], 
+                                    'starteff':session_state['db']['StarTeff'][ind],
+                                    'masse':session_state['db']['pl_bmasse'][ind],'period':session_state['db']['pl_orbper'][ind],
+                                    'sep_elt':sep_elt[ind], 'sep_mag':sep_mag[ind],'stargaiamag':session_state['db']['sy_gaiamag'][ind],
+                                    'note':session_state['db']['note'][ind]
+                                })
+    datadfpoints2 = datadfpoints2.reset_index(drop=True)
+    datadfpointsdict2 = datadfpoints2.to_dict(orient = 'list')
+    datapoints2=ColumnDataSource(data=datadfpointsdict2)
+    p.scatter('plotx','ploty', source=datapoints2, fill_alpha=1, size='markersize', 
+                line_color='grennyellow', color=None, line_width=2)
 
     if cont_curve is None:
         pass
