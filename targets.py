@@ -281,7 +281,10 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
             ind = np.append(ind,int(np.where(names == name)[0][0]))
         except IndexError:
             pass
-    session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'\n In ELT-ANDES Golden Sample for Atm Characterization'
+    if session_state['db'].loc[ind,'note'] == '':
+        session_state['db'].loc[ind,'note']='In ELT-ANDES Golden Sample for Atm Characterization'
+    else:
+        session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'; In ELT-ANDES Golden Sample for Atm Characterization'
     datadfpoints2 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
                                         'phases':phases[ind], 'color':spt[ind], 
                                 'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
@@ -309,7 +312,11 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
             ind = np.append(ind,int(np.where(names == name)[0][0]))
         except IndexError:
             pass
-    session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'\n In Kane+2026 Venus Zone'
+    
+    if session_state['db'].loc[ind,'note'] == '':
+        session_state['db'].loc[ind,'note']='In Kane+2026 Venus Zone'
+    else:
+        session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'; In Kane+2026 Venus Zone'
     datadfpoints2 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
                                         'phases':phases[ind], 'color':spt[ind], 
                                 'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
@@ -325,7 +332,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     datadfpointsdict2 = datadfpoints2.to_dict(orient = 'list')
     datapoints2=ColumnDataSource(data=datadfpointsdict2)
     p.scatter('plotx','ploty', source=datapoints2, fill_alpha=1, size='markersize', 
-                line_color='greenyellow', color=None, line_width=2)
+                line_color='green', color=None, line_width=2)
 
     if cont_curve is None:
         pass
