@@ -418,12 +418,12 @@ st.button(r"$\textsf{\Large Add a contrast curve}$", on_click=toggle_image)
 import streamlit.components.v1 as components
 from bokeh.plotting import figure, save
 from bokeh.io import output_file
-def use_file_for_bokeh(chart: figure, chart_height=500, chart_width=1000):
+def use_file_for_bokeh(chart: figure, chart_width=1000):
     output_file('bokeh_graph.html')
     save(chart)
     with open("bokeh_graph.html", 'r', encoding='utf-8') as f:
         html = f.read()
-    components.html(html, height=chart_height, width=chart_width)
+    components.html(html, width=chart_width)
 
 if st.session_state.show_text:
     '''Enter contrast curve values to display on the above plot and select planets above the curve.  Enter a list of separation values in 
