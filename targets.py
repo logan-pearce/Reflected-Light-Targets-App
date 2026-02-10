@@ -492,8 +492,12 @@ else:
 
 st.html(
     """
-    <h2> Circles: </h2><br>
-    <span style="color:#FF4500">Orangered:</span> This planet has an orbit analysis in the "Predict Planet Location" tab
+    <h2> Circles: </h2>
+    <span style="color:#FF4500">Orangered:</span> This planet has an orbit analysis in the "Predict Planet Location" tab<br>
+    <span style="color:#DAA520">Goldenrod:</span> This planet is in the Roman <a href="https://plandb.sioslab.com/index.php">Imaging Mission Database</a><br>
+    <span style="color:#9400D3">Darkviolet:</span> This planet is in the <a href="https://arxiv.org/abs/2311.17075">ELT-ANDES Golden Sample for Atmosphere Characterization</a><br>
+    <span style="color:#008000">Green:</span> This planet is in the "Venus Zone" according to <a href="https://ui.adsabs.harvard.edu/abs/2026arXiv260202728K/abstract">Kane+ 2026</a><br>
+
 
 """
 )
