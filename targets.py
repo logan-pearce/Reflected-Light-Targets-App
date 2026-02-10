@@ -281,7 +281,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
             ind = np.append(ind,int(np.where(names == name)[0][0]))
         except IndexError:
             pass
-    if session_state['db'].loc[ind,'note'].item() == '':
+    if session_state['db'].loc[ind,'note'].any() == '':
         session_state['db'].loc[ind,'note']='In ELT-ANDES Golden Sample for Atm Characterization'
     else:
         session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'; In ELT-ANDES Golden Sample for Atm Characterization'
@@ -313,7 +313,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
         except IndexError:
             pass
     
-    if session_state['db'].loc[ind,'note'].item() == '':
+    if session_state['db'].loc[ind,'note'].any() == '':
         session_state['db'].loc[ind,'note']='In Kane+2026 Venus Zone'
     else:
         session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'; In Kane+2026 Venus Zone'
