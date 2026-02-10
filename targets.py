@@ -281,7 +281,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
             ind = np.append(ind,int(np.where(names == name)[0][0]))
         except IndexError:
             pass
-    session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note'].append('\n In ELT-ANDES Golden Sample for Atm Characterization')
+    session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'\n In ELT-ANDES Golden Sample for Atm Characterization'
     datadfpoints2 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
                                         'phases':phases[ind], 'color':spt[ind], 
                                 'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
@@ -309,7 +309,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
             ind = np.append(ind,int(np.where(names == name)[0][0]))
         except IndexError:
             pass
-    session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note'].append('\n In Kane+2026 Venus Zone')
+    session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'\n In Kane+2026 Venus Zone'
     datadfpoints2 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
                                         'phases':phases[ind], 'color':spt[ind], 
                                 'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
