@@ -354,8 +354,8 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
 
     AgSlider = Slider(start=0.05, end=1.0, value=0.3, step=.01, title="Geometric Albedo", styles={'color':'white'})
     IWASlider = Slider(start=1, end=10, value=2, step=.5, title="IWA")
-    LambdaSlider = Slider(start=400, end=2000, value=800, step=50, title="Wavelength [nm]")
-    DSlider = Slider(start=2, end=45, value=25.4, step=0.5, title="Primary Mirror Diameter [m]")
+    LambdaSlider = Slider(start=400, end=2000, value=800, step=50, title="Wavelength [nm]", styles={'color':'white'})
+    DSlider = Slider(start=2, end=45, value=25.4, step=0.5, title="Primary Mirror Diameter [m]", styles={'color':'white'})
 
     sliders_callback_code = """
         var Ag = Ag.value;
