@@ -86,6 +86,12 @@ if st.session_state.show_text:
         ''' #### Update plot to show all planets < 5Mearth in the habitable zone: '''
         strg = 'SELECT * FROM targets WHERE Note LIKE "%HZ%"'
         st.code(strg, language="sql")
+        '''or only conservative HZ planets:'''
+        strg = 'SELECT * FROM targets WHERE HZ = 1'
+        st.code(strg, language="sql")
+        '''or only optimistic HZ planets:'''
+        strg = 'SELECT * FROM targets WHERE HZ = 2'
+        st.code(strg, language="sql")
 
     with rows[1]:
         '''Database Columns'''
