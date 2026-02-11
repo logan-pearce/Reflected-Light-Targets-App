@@ -339,7 +339,33 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
 
     ind = np.array([], dtype=int)
     for i in range(len(session_state['db'])):
-        if 'Conservative HZ' in session_state['db'].loc[i,'Note']:
+        if session_state['db'].loc[i,'HZ'] == 2:
+            ind = np.append(ind,i)
+    
+    if session_state['db'].loc[ind,'note'].any() == '':
+        session_state['db'].loc[ind,'note']='In Optimistic HZ'
+    else:
+        session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'; In Optimistic HZ'
+    datadfpoints2 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
+                                        'phases':phases[ind], 'color':spt[ind], 
+                                'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
+                                'spt':spt[ind], 'dist':session_state['db']['sy_dist'][ind],
+                                    'phases':phases[ind], 'plotx_og':plotx[ind], 'ploty_og':ploty[ind], 'iwa': 2, 
+                                    'sepau':sepau[ind], 'sepmas':sepmas[ind], 'dec':session_state['db']['dec'][ind], 
+                                    'starteff':session_state['db']['StarTeff'][ind],
+                                    'masse':session_state['db']['pl_bmasse'][ind],'period':session_state['db']['pl_orbper'][ind],
+                                    'sep_elt':sep_elt[ind], 'sep_mag':sep_mag[ind],'stargaiamag':session_state['db']['sy_gaiamag'][ind],
+                                    'note':session_state['db']['note'][ind]
+                                })
+    datadfpoints2 = datadfpoints2.reset_index(drop=True)
+    datadfpointsdict2 = datadfpoints2.to_dict(orient = 'list')
+    datapoints2=ColumnDataSource(data=datadfpointsdict2)
+    p.scatter('plotx','ploty', source=datapoints2, fill_alpha=1, size='markersize', 
+                line_color='#66CDAA', color=None, line_width=2)
+    
+    ind = np.array([], dtype=int)
+    for i in range(len(session_state['db'])):
+        if session_state['db'].loc[i,'HZ'] == 1:
             ind = np.append(ind,i)
     
     if session_state['db'].loc[ind,'note'].any() == '':
