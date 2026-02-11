@@ -214,6 +214,8 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
 
     p.add_layout(color_bar, 'right')
 
+    ########## circles ##############
+
     keys = [key for key in plDict.keys() if '---' not in key]
     names = np.array(data.data['name'])
     
@@ -282,9 +284,9 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
         except IndexError:
             pass
     if session_state['db'].loc[ind,'note'].any() == '':
-        session_state['db'].loc[ind,'note']='In ELT-ANDES Golden Sample for Atm Characterization'
+        session_state['db'].loc[ind,'note']='In ELT-ANDES Golden Sample for Atm Characterization Bhatnagar+2026'
     else:
-        session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'; In ELT-ANDES Golden Sample for Atm Characterization'
+        session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'; In ELT-ANDES Golden Sample for Atm Characterization Bhatnagar+2026'
     datadfpoints2 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
                                         'phases':phases[ind], 'color':spt[ind], 
                                 'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
@@ -333,6 +335,40 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     datapoints2=ColumnDataSource(data=datadfpointsdict2)
     p.scatter('plotx','ploty', source=datapoints2, fill_alpha=1, size='markersize', 
                 line_color='green', color=None, line_width=2)
+    
+
+    venus = ['HD 20794 d', 'HD 219134 d', 'GJ 411 b', 'HD 219134 f', 'Proxima Cen d', 'Barnard e', 'Wolf 1061 c', 'GJ 15 A b',
+             'Gl 725 A b', 'GJ 273 b', 'Barnard c', 'GJ 1061 d', 'Ross 128 b', 'GJ 251 b', 'Barnard b', 'GJ 625 b', 'Barnard d', 
+             'L 98-59 f', 'GJ 1061 c', 'AU Mic d']
+
+    ind = np.array([], dtype=int)
+    for i in range(len(session_state['db'])):
+        if 'Conservative HZ' in session_state['db'].loc[i,'Note']:
+            ind = np.append(ind,i)
+    
+    if session_state['db'].loc[ind,'note'].any() == '':
+        session_state['db'].loc[ind,'note']='In Conservative HZ'
+    else:
+        session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'; In Conservative HZ'
+    datadfpoints2 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
+                                        'phases':phases[ind], 'color':spt[ind], 
+                                'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
+                                'spt':spt[ind], 'dist':session_state['db']['sy_dist'][ind],
+                                    'phases':phases[ind], 'plotx_og':plotx[ind], 'ploty_og':ploty[ind], 'iwa': 2, 
+                                    'sepau':sepau[ind], 'sepmas':sepmas[ind], 'dec':session_state['db']['dec'][ind], 
+                                    'starteff':session_state['db']['StarTeff'][ind],
+                                    'masse':session_state['db']['pl_bmasse'][ind],'period':session_state['db']['pl_orbper'][ind],
+                                    'sep_elt':sep_elt[ind], 'sep_mag':sep_mag[ind],'stargaiamag':session_state['db']['sy_gaiamag'][ind],
+                                    'note':session_state['db']['note'][ind]
+                                })
+    datadfpoints2 = datadfpoints2.reset_index(drop=True)
+    datadfpointsdict2 = datadfpoints2.to_dict(orient = 'list')
+    datapoints2=ColumnDataSource(data=datadfpointsdict2)
+    p.scatter('plotx','ploty', source=datapoints2, fill_alpha=1, size='markersize', 
+                line_color='#00FFFF', color=None, line_width=2)
+    
+
+    ############## cont curves #######################
 
     if cont_curve is None:
         pass
@@ -495,9 +531,10 @@ st.html(
     <h2> Circles: </h2>
     <span style="color:#FF4500">Orangered:</span> This planet has an orbit analysis in the "Predict Planet Location" tab<br>
     <span style="color:#DAA520">Goldenrod:</span> This planet is in the Roman <a href="https://plandb.sioslab.com/index.php">Imaging Mission Database</a><br>
-    <span style="color:#9400D3">Darkviolet:</span> This planet is in the <a href="https://arxiv.org/abs/2311.17075">ELT-ANDES Golden Sample for Atmosphere Characterization</a><br>
+    <span style="color:#9400D3">Darkviolet:</span> This planet is in the <a href="https://ui.adsabs.harvard.edu/abs/2026arXiv260120620B/abstract">ELT-ANDES Golden Sample for Atmosphere Characterization</a><br>
     <span style="color:#008000">Green:</span> This planet is in the "Venus Zone" according to <a href="https://ui.adsabs.harvard.edu/abs/2026arXiv260202728K/abstract">Kane+ 2026</a><br>
 
 
 """
 )
+st.write('Target List Updated 2026-02-10')
