@@ -170,7 +170,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
 
 
     data=ColumnDataSource(data=datadict)
-    proxima=ColumnDataSource(data=proxcendict)
+    # proxima=ColumnDataSource(data=proxcendict)
 
     tools = "hover, box_zoom, zoom_in, zoom_out, save, undo, redo, reset, pan"
     tooltips = [
