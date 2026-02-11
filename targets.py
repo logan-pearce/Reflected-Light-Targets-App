@@ -337,10 +337,6 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
                 line_color='green', color=None, line_width=2)
     
 
-    venus = ['HD 20794 d', 'HD 219134 d', 'GJ 411 b', 'HD 219134 f', 'Proxima Cen d', 'Barnard e', 'Wolf 1061 c', 'GJ 15 A b',
-             'Gl 725 A b', 'GJ 273 b', 'Barnard c', 'GJ 1061 d', 'Ross 128 b', 'GJ 251 b', 'Barnard b', 'GJ 625 b', 'Barnard d', 
-             'L 98-59 f', 'GJ 1061 c', 'AU Mic d']
-
     ind = np.array([], dtype=int)
     for i in range(len(session_state['db'])):
         if 'Conservative HZ' in session_state['db'].loc[i,'Note']:
