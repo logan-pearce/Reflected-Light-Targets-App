@@ -387,7 +387,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     datadfpointsdict2 = datadfpoints2.to_dict(orient = 'list')
     datapoints2=ColumnDataSource(data=datadfpointsdict2)
     p.scatter('plotx','ploty', source=datapoints2, fill_alpha=1, size='markersize', 
-                line_color='#00FFFF', color=None, line_width=2)
+                line_color='#48D1CC', color=None, line_width=2)
     
 
     ############## cont curves #######################
@@ -555,6 +555,9 @@ st.html(
     <span style="color:#DAA520">Goldenrod:</span> This planet is in the Roman <a href="https://plandb.sioslab.com/index.php">Imaging Mission Database</a><br>
     <span style="color:#9400D3">Darkviolet:</span> This planet is in the <a href="https://ui.adsabs.harvard.edu/abs/2026arXiv260120620B/abstract">ELT-ANDES Golden Sample for Atmosphere Characterization</a><br>
     <span style="color:#008000">Green:</span> This planet is in the "Venus Zone" according to <a href="https://ui.adsabs.harvard.edu/abs/2026arXiv260202728K/abstract">Kane+ 2026</a><br>
+    <span style="color:#48D1CC">Mediumturquoise:</span> This planet is in the Conservative Habitable Zone according to <a href="https://ui.adsabs.harvard.edu/abs/2014ApJ...787L..29K/abstract">Kopparapu+ 2014</a><br>
+    <span style="color:#66CDAA">Mediumaquamarine:</span> This planet is in the Optimistic Habitable Zone according to <a href="https://ui.adsabs.harvard.edu/abs/2014ApJ...787L..29K/abstract">Kopparapu+ 2014</a><br>
+    
 
 
 """
