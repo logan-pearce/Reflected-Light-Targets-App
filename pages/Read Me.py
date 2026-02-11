@@ -83,6 +83,10 @@ if st.session_state.show_text:
         strg = 'SELECT * FROM targets WHERE pl_name LIKE "%tau Cet%"'
         st.code(strg, language="sql")
 
+        ''' #### Update plot to show all planets < 5Mearth in the habitable zone: '''
+        strg = 'SELECT * FROM targets WHERE Note LIKE "%HZ%"'
+        st.code(strg, language="sql")
+
     with rows[1]:
         '''Database Columns'''
         db = pd.read_csv('Target-list-with-orbital-params.csv')
