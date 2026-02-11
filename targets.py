@@ -481,17 +481,30 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     LambdaSlider.js_on_change('value', CustomJS(args=slider_args,code=sliders_callback_code))
     DSlider.js_on_change('value', CustomJS(args=slider_args,code=sliders_callback_code))
 
-    slider_args2 = dict(source=proxima, Ag=AgSlider, Lambda=LambdaSlider, D=DSlider)
-
-    AgSlider.js_on_change('value', CustomJS(args=slider_args2,code=sliders_callback_code))
-    LambdaSlider.js_on_change('value', CustomJS(args=slider_args2,code=sliders_callback_code))
-    DSlider.js_on_change('value', CustomJS(args=slider_args2,code=sliders_callback_code))
+    #slider_args2 = dict(source=proxima, Ag=AgSlider, Lambda=LambdaSlider, D=DSlider)
+    # slider_args2 = dict(source=datapoints, Ag=AgSlider, Lambda=LambdaSlider, D=DSlider)
+    # AgSlider.js_on_change('value', CustomJS(args=slider_args2,code=sliders_callback_code))
+    # LambdaSlider.js_on_change('value', CustomJS(args=slider_args2,code=sliders_callback_code))
+    # DSlider.js_on_change('value', CustomJS(args=slider_args2,code=sliders_callback_code))
     try:
-        slider_args3 = dict(source=datapoints, Ag=AgSlider, Lambda=LambdaSlider, D=DSlider)
-
+        slider_args2 = dict(source=datapoints, Ag=AgSlider, Lambda=LambdaSlider, D=DSlider)
+        AgSlider.js_on_change('value', CustomJS(args=slider_args2,code=sliders_callback_code))
+        LambdaSlider.js_on_change('value', CustomJS(args=slider_args2,code=sliders_callback_code))
+        DSlider.js_on_change('value', CustomJS(args=slider_args2,code=sliders_callback_code))
+    except UnboundLocalError:
+        pass
+    try:
+        slider_args3 = dict(source=datapoints2, Ag=AgSlider, Lambda=LambdaSlider, D=DSlider)
         AgSlider.js_on_change('value', CustomJS(args=slider_args3,code=sliders_callback_code))
         LambdaSlider.js_on_change('value', CustomJS(args=slider_args3,code=sliders_callback_code))
         DSlider.js_on_change('value', CustomJS(args=slider_args3,code=sliders_callback_code))
+    except UnboundLocalError:
+        pass
+    try:
+        slider_args4 = dict(source=datapoints3, Ag=AgSlider, Lambda=LambdaSlider, D=DSlider)
+        AgSlider.js_on_change('value', CustomJS(args=slider_args4,code=sliders_callback_code))
+        LambdaSlider.js_on_change('value', CustomJS(args=slider_args4,code=sliders_callback_code))
+        DSlider.js_on_change('value', CustomJS(args=slider_args4,code=sliders_callback_code))
     except UnboundLocalError:
         pass
 
