@@ -203,8 +203,8 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     p.scatter('plotx','ploty', source=data, fill_alpha=0.8, size='markersize', 
                 line_color=mapper, color=mapper)
 
-    p.scatter('plotx','ploty', source=proxima, fill_alpha=0.8, size='markersize', 
-                line_color='red', color=mapper)
+    # p.scatter('plotx','ploty', source=proxima, fill_alpha=0.8, size='markersize', 
+    #             line_color='red', color=mapper)
 
     color_bar = ColorBar(color_mapper=mapper['transform'], width=15, 
                             location=(0,0), title="Phase",
