@@ -243,10 +243,11 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     datapoints=ColumnDataSource(data=datadfpointsdict)
     p.scatter('plotx','ploty', source=datapoints, fill_alpha=1, size='markersize', 
                 line_color='orangered', color=None, line_width=2)
-    # except IndexError:
-    #     pass
+
 
     names = np.array(data.data['name'])
+
+    ##########
     plandb = pd.read_csv('plandb.csv')
     
     #try:
@@ -273,8 +274,8 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     datapoints2=ColumnDataSource(data=datadfpointsdict2)
     p.scatter('plotx','ploty', source=datapoints2, fill_alpha=1, size='markersize', 
                 line_color='goldenrod', color=None, line_width=2)
-    # except IndexError:
-    #     pass
+    
+    #######
     andes = ['Proxima Cen b', 'GJ 273 b', 'Wolf 1061 c', 'GJ 682 b', 'Ross 128 b']
 
     ind = np.array([], dtype=int)
@@ -287,7 +288,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
         session_state['db'].loc[ind,'note']='In ELT-ANDES Golden Sample for Atm Characterization Bhatnagar+2026'
     else:
         session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'; In ELT-ANDES Golden Sample for Atm Characterization Bhatnagar+2026'
-    datadfpoints2 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
+    datadfpoints3 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
                                         'phases':phases[ind], 'color':spt[ind], 
                                 'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
                                 'spt':spt[ind], 'dist':session_state['db']['sy_dist'][ind],
@@ -298,12 +299,13 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
                                     'sep_elt':sep_elt[ind], 'sep_mag':sep_mag[ind],'stargaiamag':session_state['db']['sy_gaiamag'][ind],
                                     'note':session_state['db']['note'][ind]
                                 })
-    datadfpoints2 = datadfpoints2.reset_index(drop=True)
-    datadfpointsdict2 = datadfpoints2.to_dict(orient = 'list')
-    datapoints2=ColumnDataSource(data=datadfpointsdict2)
-    p.scatter('plotx','ploty', source=datapoints2, fill_alpha=1, size='markersize', 
+    datadfpoints3 = datadfpoints3.reset_index(drop=True)
+    datadfpointsdict3 = datadfpoints3.to_dict(orient = 'list')
+    datapoints3=ColumnDataSource(data=datadfpointsdict3)
+    p.scatter('plotx','ploty', source=datapoints3, fill_alpha=1, size='markersize', 
                 line_color='darkviolet', color=None, line_width=2)
     
+    ##########
     venus = ['HD 20794 d', 'HD 219134 d', 'GJ 411 b', 'HD 219134 f', 'Proxima Cen d', 'Barnard e', 'Wolf 1061 c', 'GJ 15 A b',
              'Gl 725 A b', 'GJ 273 b', 'Barnard c', 'GJ 1061 d', 'Ross 128 b', 'GJ 251 b', 'Barnard b', 'GJ 625 b', 'Barnard d', 
              'L 98-59 f', 'GJ 1061 c', 'AU Mic d']
@@ -319,7 +321,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
         session_state['db'].loc[ind,'note']='In Kane+2026 Venus Zone'
     else:
         session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'; In Kane+2026 Venus Zone'
-    datadfpoints2 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
+    datadfpoints4 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
                                         'phases':phases[ind], 'color':spt[ind], 
                                 'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
                                 'spt':spt[ind], 'dist':session_state['db']['sy_dist'][ind],
@@ -330,13 +332,13 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
                                     'sep_elt':sep_elt[ind], 'sep_mag':sep_mag[ind],'stargaiamag':session_state['db']['sy_gaiamag'][ind],
                                     'note':session_state['db']['note'][ind]
                                 })
-    datadfpoints2 = datadfpoints2.reset_index(drop=True)
-    datadfpointsdict2 = datadfpoints2.to_dict(orient = 'list')
-    datapoints2=ColumnDataSource(data=datadfpointsdict2)
-    p.scatter('plotx','ploty', source=datapoints2, fill_alpha=1, size='markersize', 
+    datadfpoints4 = datadfpoints4.reset_index(drop=True)
+    datadfpointsdict4 = datadfpoints4.to_dict(orient = 'list')
+    datapoints4=ColumnDataSource(data=datadfpointsdict4)
+    p.scatter('plotx','ploty', source=datapoints4, fill_alpha=1, size='markersize', 
                 line_color='green', color=None, line_width=2)
     
-
+    #############
     ind = np.array([], dtype=int)
     for i in range(len(session_state['db'])):
         if session_state['db'].loc[i,'HZ'] == 2:
@@ -346,7 +348,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
         session_state['db'].loc[ind,'note']='In Optimistic HZ'
     else:
         session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'; In Optimistic HZ'
-    datadfpoints2 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
+    datadfpoints5 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
                                         'phases':phases[ind], 'color':spt[ind], 
                                 'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
                                 'spt':spt[ind], 'dist':session_state['db']['sy_dist'][ind],
@@ -357,12 +359,13 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
                                     'sep_elt':sep_elt[ind], 'sep_mag':sep_mag[ind],'stargaiamag':session_state['db']['sy_gaiamag'][ind],
                                     'note':session_state['db']['note'][ind]
                                 })
-    datadfpoints2 = datadfpoints2.reset_index(drop=True)
-    datadfpointsdict2 = datadfpoints2.to_dict(orient = 'list')
-    datapoints2=ColumnDataSource(data=datadfpointsdict2)
-    p.scatter('plotx','ploty', source=datapoints2, fill_alpha=1, size='markersize', 
+    datadfpoints5 = datadfpoints5.reset_index(drop=True)
+    datadfpointsdict5 = datadfpoints5.to_dict(orient = 'list')
+    datapoints5=ColumnDataSource(data=datadfpointsdict5)
+    p.scatter('plotx','ploty', source=datapoints5, fill_alpha=1, size='markersize', 
                 line_color='#66CDAA', color=None, line_width=2)
     
+    #############
     ind = np.array([], dtype=int)
     for i in range(len(session_state['db'])):
         if session_state['db'].loc[i,'HZ'] == 1:
@@ -372,7 +375,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
         session_state['db'].loc[ind,'note']='In Conservative HZ'
     else:
         session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'; In Conservative HZ'
-    datadfpoints2 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
+    datadfpoints6 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
                                         'phases':phases[ind], 'color':spt[ind], 
                                 'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
                                 'spt':spt[ind], 'dist':session_state['db']['sy_dist'][ind],
@@ -383,10 +386,10 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
                                     'sep_elt':sep_elt[ind], 'sep_mag':sep_mag[ind],'stargaiamag':session_state['db']['sy_gaiamag'][ind],
                                     'note':session_state['db']['note'][ind]
                                 })
-    datadfpoints2 = datadfpoints2.reset_index(drop=True)
-    datadfpointsdict2 = datadfpoints2.to_dict(orient = 'list')
-    datapoints2=ColumnDataSource(data=datadfpointsdict2)
-    p.scatter('plotx','ploty', source=datapoints2, fill_alpha=1, size='markersize', 
+    datadfpoints6 = datadfpoints6.reset_index(drop=True)
+    datadfpointsdict6 = datadfpoints6.to_dict(orient = 'list')
+    datapoints6=ColumnDataSource(data=datadfpointsdict6)
+    p.scatter('plotx','ploty', source=datapoints6, fill_alpha=1, size='markersize', 
                 line_color='#48D1CC', color=None, line_width=2)
     
 
