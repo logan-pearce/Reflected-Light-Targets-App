@@ -6,7 +6,7 @@ import warnings
 warnings.filterwarnings('ignore')
 from astroquery.ipac.nexsci.nasa_exoplanet_archive import NasaExoplanetArchive
 p = NasaExoplanetArchive.query_criteria(table="pscomppars", select="*", 
-                                        where="sy_dist < 70 and discoverymethod = 'Radial Velocity'")
+                                        where="sy_dist < 70")
 p = p.to_pandas()
 p = p.sort_values(by=['sy_dist'])
 p = p.reset_index(drop = True)
