@@ -18,6 +18,7 @@ st.set_page_config(
 sidebar_logo = 'images/grip-offwhite.png'
 st.logo(sidebar_logo, size='large')
 
+st.sidebar.write("""<div style="width:100%;text-align: center">External Links</div><br>""", unsafe_allow_html=True)
 import base64
 st.sidebar.markdown(
     """<a href="https://reflectx.readthedocs.io" style="text-decoration:none; color:#EEEEEE">
