@@ -18,7 +18,7 @@ st.set_page_config(
 sidebar_logo = 'images/grip-offwhite.png'
 st.logo(sidebar_logo, size='large')
 
-
+import base64
 st.sidebar.markdown(
     """<a href="https://reflectx.readthedocs.io" style="text-decoration:none; color:#EEEEEE">
     <img src="data:image/png;base64,{}" width="25">
