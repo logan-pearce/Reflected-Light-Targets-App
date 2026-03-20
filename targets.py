@@ -23,7 +23,7 @@ st.sidebar.markdown(
     """<a href="https://reflectx.readthedocs.io" style="text-decoration:none; color:#EEEEEE">
     <img src="data:image/png;base64,{}" width="25">
     </a>""".format(
-        base64.b64encode(open("logo-sol.png", "rb").read()).decode()
+        base64.b64encode(open("image/logo-sol.png", "rb").read()).decode()
     ),
     unsafe_allow_html=True,
 )
