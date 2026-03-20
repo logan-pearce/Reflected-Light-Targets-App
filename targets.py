@@ -29,7 +29,7 @@ st.sidebar.markdown(
 )
 
 #st.sidebar.image("images/logo-sol.png", use_column_width=True)
-# st.sidebar.write("""<div style="width:100%;text-align:center;"><a href="https://reflectx.readthedocs.io" style="text-decoration:none; color:#EEEEEE">ReflectX Gas Giant Reflected Light Models</a></div><br><br>""", unsafe_allow_html=True)
+st.sidebar.write("""<div style="width:100%;"><a href="https://reflectx.readthedocs.io" style="text-decoration:none; color:#EEEEEE">ReflectX Gas Giant Reflected Light Models</a></div><br><br>""", unsafe_allow_html=True)
 
 st.sidebar.write("""<div style="width:100%;"><a href="https://docs.google.com/spreadsheets/d/1sk9wDIVi4uWELL_gSyr7Zb41HZJ27Puyvc1QqWBZFs4/edit?gid=0#gid=0" style="text-decoration:none; color:#EEEEEE">Indirectly Discovered, \n Directly Detected Companions</a></div>""", unsafe_allow_html=True)
 
