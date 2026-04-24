@@ -137,7 +137,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     phases = session_state['db']['PhaseAtMaxProj']
     sepau = np.array(session_state['db']['MaxProjectedSeparation_au'])
     sepmas = np.array(session_state['db']['MaxProjectedSeparation_mas'])
-    instell = np.array(session_state['db']['EarthEqIntell'])
+    instell = np.array(session_state['db']['EarthEqInstell'])
     filt = 'i'
     xaxis_label = r'\[ \mathrm{Max\; Projected\; Separation}\; [\\lambda/D]\]'
     annotation_text = ''
@@ -200,7 +200,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
         ('Rad [Rearth]','@rad{0.00}'),
         ('Mass or Msini [Mearth]','@masse{0.0}'),
         ('Star Teff', '@starteff{0}'),
-        ('Earth-Eq Instell', '@instell{0.0}'),
+        ('Earth-Eq Instell', '@instell'),
         ('SpT','@spt{0.0}'),
         ('Star Gaia G', '@stargaiamag{0.0}'),
         ('Dist [pc]','@dist{0.0}'),
