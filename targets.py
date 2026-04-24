@@ -129,7 +129,7 @@ def GetPointsWithinARegion(xdata, ydata, points):
     return indicieswithinregion
 
 
-def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_curve = None):
+def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_curve = None, show_contrast_curves = False):
     rad = session_state['db']['PlanetRadiuse'].copy()
     spt = session_state['db']['SpTNumber'].copy()
     plotx = session_state['db']['MaxProjectedSeparation_lod_gmagaox']
@@ -161,7 +161,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
                                 'name':session_state['db']['pl_name'], 'rad':rad, 'spt':spt, 'dist':session_state['db']['sy_dist'],
                                 'phases':phases, 'plotx_og':plotx, 'ploty_og':ploty, 'iwa': 2, 
                                 'sepau':sepau, 'sepmas':sepmas, 'dec':session_state['db']['dec'], 
-                                'starteff':session_state['db']['StarTeff'],
+                                'starteff':session_state['db']['StarTeff'],'instell':session_state['db']['EarthEqIntell'],
                                 'masse':session_state['db']['pl_bmasse'],
                                 'sep_elt':sep_elt, 'sep_mag':sep_mag, 'period':session_state['db']['pl_orbper'],
                                 'stargaiamag':session_state['db']['sy_gaiamag'], 'note':session_state['db']['note']
@@ -199,6 +199,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
         ('Rad [Rearth]','@rad{0.00}'),
         ('Mass or Msini [Mearth]','@masse{0.0}'),
         ('Star Teff', '@starteff{0}'),
+        ('Earth-Eq Instell', '@instell{0.0}')
         ('SpT','@spt{0.0}'),
         ('Star Gaia G', '@stargaiamag{0.0}'),
         ('Dist [pc]','@dist{0.0}'),
@@ -406,7 +407,34 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
                 line_color='#48D1CC', color=None, line_width=2)
     
 
-    ############## cont curves #######################
+    ############## instrument cont curves #######################
+
+    if not show_contrast_curves:
+        pass
+    else:
+        st.write(st.session_state.show_contrast_curves)
+        romanx, romany = np.array([153.19473438, 184.82203438, 216.94351094, 248.57081094,
+        280.6922875 , 312.3195875 , 344.44106406, 376.06836406,
+        408.18984062, 439.81714063]), np.array([4.97e-09, 4.99e-09, 2.99e-09, 1.54e-09, 1.53e-09, 1.53e-09,
+        1.54e-09, 1.54e-09, 1.28e-09, 1.29e-09])
+        lazulix, lazuliy = [120,600], [2e-9,2e-9]
+        hwox,hwoy = [50,500], [1e-10,1e-10]
+        sphereyjhx, sphereyjhy = np.array([200., 300., 400., 500., 600., 700.]),np.array([1.99526231e-06, 4.78630092e-07, 3.16227766e-07, 3.01995172e-07,
+        3.98107171e-07, 3.01995172e-07])
+        harmonix, harmoniy = np.array([ 50.12285012,  53.80835381,  75.18427518, 100.        ,
+        110.81081081, 125.06142506, 130.46683047, 150.12285012,
+        175.42997543, 200.24570025, 250.36855037, 274.69287469]), np.array([5.70813877e-07, 3.96961185e-07, 1.49179422e-07, 1.08016432e-07,
+        1.60096503e-07, 3.44668974e-07, 3.89031126e-07, 5.21264205e-07,
+        4.13309541e-07, 1.52220314e-07, 8.14325664e-08, 9.96403065e-08])
+        gmagaoxtargetx, gmagaoxtargety = np.array([ 12.99527559,  38.98582677, 649.76377953]),np.array([1.e-07, 1.e-08, 1.e-08])
+        eltpcsx, eltpcsy = np.array([ 15,  30,  50, 100, 300]),np.array([4.8e-09, 2.2e-09, 1.3e-09, 7.0e-10, 4.0e-10])
+        p.line(romanx, romany)
+
+
+
+
+
+    ############## custom cont curves #######################
 
     if cont_curve is None:
         pass
@@ -465,6 +493,10 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     IWASlider = Slider(start=1, end=10, value=2, step=.5, title="IWA")
     LambdaSlider = Slider(start=400, end=2000, value=800, step=50, title="Wavelength [nm]", styles={'color':'white'})
     DSlider = Slider(start=2, end=45, value=25.4, step=0.5, title="Primary Mirror Diameter [m]", styles={'color':'white'})
+    # AgSlider = Slider(start=0.05, end=1.0, value=0.3, step=.01, title="Geometric Albedo")
+    # IWASlider = Slider(start=1, end=10, value=2, step=.5, title="IWA")
+    # LambdaSlider = Slider(start=400, end=2000, value=800, step=50, title="Wavelength [nm]")
+    # DSlider = Slider(start=2, end=45, value=25.4, step=0.5, title="Primary Mirror Diameter [m]")
 
     sliders_callback_code = """
         var Ag = Ag.value;
@@ -550,13 +582,20 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
 if 'cont_curve' not in session_state:
     session_state['cont_curve'] = None
 
+if 'show_contrast_curves' not in session_state:
+    session_state['show_contrast_curves'] = False
+
 ######### Render the plot
 if 'show_text' not in st.session_state:
     st.session_state.show_text = False
 def toggle_image():
     st.session_state.show_text = not st.session_state.show_text
+def toggle_contrast_curves():
+    st.session_state.show_contrast_curves = not st.session_state.show_contrast_curves
 
-st.button(r"$\textsf{\Large Add a contrast curve}$", on_click=toggle_image)
+
+#st.button(r"$\textsf{\Large Show contrast curves}$", on_click=toggle_contrast_curves)
+st.button(r"$\textsf{\Large Add a custom contrast curve}$", on_click=toggle_image)
 
 import streamlit.components.v1 as components
 from bokeh.plotting import figure, save
@@ -593,9 +632,11 @@ if st.session_state.show_text:
        pass
 
 if session_state['cont_curve'] == None:
-    MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_curve = session_state['cont_curve'])
+    MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_curve = session_state['cont_curve'], show_contrast_curves=session_state['show_contrast_curves'])
 else:
     pass
+
+
 
 
 st.html(
