@@ -199,7 +199,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
         ('Rad [Rearth]','@rad{0.00}'),
         ('Mass or Msini [Mearth]','@masse{0.0}'),
         ('Star Teff', '@starteff{0}'),
-        ('Earth-Eq Instell', '@instell{0.0}')
+        ('Earth-Eq Instell', '@instell{0.0}'),
         ('SpT','@spt{0.0}'),
         ('Star Gaia G', '@stargaiamag{0.0}'),
         ('Dist [pc]','@dist{0.0}'),
