@@ -10,7 +10,7 @@ import astropy.units as u
 from orbitdict import *
 
 st.set_page_config(
-        page_title="Ground-based Reflected Light Imaging Planner",
+        page_title="Generalized Reflected Light Imaging Planner",
         page_icon="images/grip-offwhite.png",
         layout="wide",
     )
@@ -42,8 +42,8 @@ with header[1]:
     h2 = st.columns((1,1,1))
     with h2[1]:
         st.image('images/grip-white-outline2.png')
-    st.title('Ground-based Reflected Light Imaging Planner')
-    st.write('Targets and orbits for exoplanet direct imaging in reflected light and thermal emission')
+    st.title('Generalized Reflected Light Imaging Planner')
+    st.write('Targets and orbits for exoplanet direct imaging in reflected light, platform agnostic')
 header2 = st.columns((1,3,1))
 
 header = st.columns((1,4,1))
