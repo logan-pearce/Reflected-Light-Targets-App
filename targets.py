@@ -432,7 +432,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     datadfpointsdict7 = datadfpoints7.to_dict(orient = 'list')
     datapoints7=ColumnDataSource(data=datadfpointsdict7)
     p.scatter('plotx','ploty', source=datapoints7, fill_alpha=0.3, size='markersize', 
-                line_color='#8f99fb', color=None, line_width=2, alph = 0.8)
+                line_color='#8f99fb', color=None, line_width=2, alpha = 0.8)
 
     ############## instrument cont curves #######################
 
