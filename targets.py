@@ -413,7 +413,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     aodb_copy.loc[ind,'Note'] = ''
     ind = np.array([i for i in range(len(aodb)) if 'HWO TSS' in aodb_copy.loc[i,'Note']], dtype=int)
     for i in ind:
-        if session_state['db'].loc[i,'note'] == '':
+        if session_state['db'].loc[i,'note'].any() == '':
             session_state['db'].loc[i,'note']='In HWO TSS list Tier 1, Tuchow+2025'
         else:
             session_state['db'].loc[i,'note']=session_state['db'].loc[i,'note']+'; In HWO TSS list Tier 1, Tuchow+2025'
