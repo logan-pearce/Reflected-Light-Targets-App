@@ -408,15 +408,86 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
                 line_color='#48D1CC', color=None, line_width=2)
 
     #######
-    aodb_copy = aodb.copy()
-    ind = [i for i in range(len(aodb_copy)) if type(aodb_copy.loc[i,'Note'])==float]
-    aodb_copy.loc[ind,'Note'] = ''
-    ind = np.array([i for i in range(len(aodb)) if 'HWO TSS' in aodb_copy.loc[i,'Note']], dtype=int)
-    for i in ind:
-        if session_state['db'].loc[i,'note'].any() == '':
-            session_state['db'].loc[i,'note']='In HWO TSS list Tier 1, Tuchow+2025'
-        else:
-            session_state['db'].loc[i,'note']=session_state['db'].loc[i,'note']+'; In HWO TSS list Tier 1, Tuchow+2025'
+    inTSS = ['55 Cnc b',
+        '55 Cnc e',
+        '55 Cnc d',
+        '55 Cnc c',
+        '55 Cnc f',
+        'HD 147513 b',
+        'rho CrB e',
+        'rho CrB d',
+        'rho CrB c',
+        'rho CrB b',
+        'HN Peg b',
+        'HD 86728 b',
+        'GJ 887 b',
+        'GJ 887 c',
+        'HD 39091 b',
+        'pi Men c',
+        'tau Cet h',
+        'tau Cet g',
+        'tau Cet e',
+        'tau Cet f',
+        'ups And c',
+        'ups And d',
+        'ups And b',
+        'HD 3651 b',
+        'HD 160691 e',
+        'HD 160691 b',
+        'HD 160691 c',
+        'HD 160691 d',
+        'HD 190360 c',
+        'HD 190360 b',
+        'HD 102365 b',
+        'HD 219134 f',
+        'HD 219134 g',
+        'HD 219134 d',
+        'HD 219134 b',
+        'HD 219134 h',
+        'HD 219134 c',
+        'HD 140901 b',
+        'HD 140901 c',
+        'HD 192310 b',
+        'HD 192310 c',
+        'HD 189567 b',
+        'HD 189567 c',
+        'HD 33564 b',
+        'HR 810 b',
+        'HD 141004 b',
+        'HD 10647 b',
+        'HD 20794 f',
+        'HD 20794 b',
+        'HD 20794 e',
+        'HD 20794 d',
+        'HD 115404 A c',
+        'HD 115404 A b',
+        '61 Vir d',
+        '61 Vir b',
+        '61 Vir c',
+        '47 UMa d',
+        '47 UMa b',
+        '47 UMa c',
+        'eps Eri b',
+        'eps Ind A b',
+        'HD 136352 d',
+        'HD 136352 c',
+        'HD 136352 b',
+        'HD 69830 c',
+        'HD 69830 d',
+        'HD 69830 b']
+    
+    ind = np.array([], dtype=int)
+    for name in inTSS:
+        try:
+            ind = np.append(ind,int(np.where(names == name)[0][0]))
+        except IndexError:
+            pass
+    
+    if session_state['db'].loc[ind,'note'].any() == '':
+        session_state['db'].loc[ind,'note']='In HWO TSS list Tier 1, Tuchow+2025'
+    else:
+        session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'; In HWO TSS list Tier 1, Tuchow+2025'
+    
     datadfpoints7 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier*0.9,
                                         'phases':phases[ind], 'color':spt[ind], 
                                 'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
