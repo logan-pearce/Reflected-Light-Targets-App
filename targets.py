@@ -162,7 +162,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
                                 'name':session_state['db']['pl_name'], 'rad':rad, 'spt':spt, 'dist':session_state['db']['sy_dist'],
                                 'phases':phases, 'plotx_og':plotx, 'ploty_og':ploty, 'iwa': 2, 
                                 'sepau':sepau, 'sepmas':sepmas, 'dec':session_state['db']['dec'], 
-                                'starteff':session_state['db']['StarTeff'],'instell':instell,
+                                'starteff':session_state['db']['StarTeff'],'instel':session_state['db']['EarthEqInstell'],
                                 'masse':session_state['db']['pl_bmasse'],
                                 'sep_elt':sep_elt, 'sep_mag':sep_mag, 'period':session_state['db']['pl_orbper'],
                                 'stargaiamag':session_state['db']['sy_gaiamag'], 'note':session_state['db']['note']
@@ -200,7 +200,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
         ('Rad [Rearth]','@rad{0.00}'),
         ('Mass or Msini [Mearth]','@masse{0.0}'),
         ('Star Teff', '@starteff{0}'),
-        ('Earth-Eq Instell', '@instell{0.00}'),
+        ('Earth-Eq Instell', '@instel{0.00}'),
         ('SpT','@spt{0.0}'),
         ('Star Gaia G', '@stargaiamag{0.0}'),
         ('Dist [pc]','@dist{0.0}'),
