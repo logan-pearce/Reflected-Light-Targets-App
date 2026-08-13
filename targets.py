@@ -416,7 +416,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
         if session_state['db'].loc[i,'note'] == '':
             session_state['db'].loc[i,'note']='In HWO TSS list Tier 1, Tuchow+2025'
         else:
-            session_state['db'].loc[ind,'note']=session_state['db'].loc[ind,'note']+'; In HWO TSS list Tier 1, Tuchow+2025'
+            session_state['db'].loc[i,'note']=session_state['db'].loc[i,'note']+'; In HWO TSS list Tier 1, Tuchow+2025'
     datadfpoints7 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
                                         'phases':phases[ind], 'color':spt[ind], 
                                 'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
@@ -431,8 +431,8 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     datadfpoints7 = datadfpoints7.reset_index(drop=True)
     datadfpointsdict7 = datadfpoints7.to_dict(orient = 'list')
     datapoints7=ColumnDataSource(data=datadfpointsdict7)
-    p.scatter('plotx','ploty', source=datapoints7, fill_alpha=1, size='markersize', 
-                line_color='#5539cc', color=None, line_width=2)
+    p.scatter('plotx','ploty', source=datapoints7, fill_alpha=0.3, size='markersize', 
+                line_color='#8f99fb', color=None, line_width=2)
 
     ############## instrument cont curves #######################
 
@@ -673,7 +673,7 @@ st.html(
     <span style="color:#DAA520">Goldenrod:</span> This planet is in the Roman <a href="https://plandb.sioslab.com/index.php">Imaging Mission Database</a><br>
     <span style="color:#9400D3">Darkviolet:</span> This planet is in the <a href="https://ui.adsabs.harvard.edu/abs/2026arXiv260120620B/abstract">ELT-ANDES Golden Sample for Atmosphere Characterization</a><br>
     <span style="color:#008000">Green:</span> This planet is in the "Venus Zone" according to <a href="https://ui.adsabs.harvard.edu/abs/2026arXiv260202728K/abstract">Kane+ 2026</a><br>
-    <span style="color:#5539cc">Blurple:</span> This host star is in the HWO Taarget Stars Tier 1 <a href="https://arxiv.org/abs/2509.20544v2">Tuchow+ 2026</a><br>
+    <span style="color:#8f99fb">Periwinkle:</span> This host star is in the HWO Taarget Stars Tier 1 <a href="https://arxiv.org/abs/2509.20544v2">Tuchow+ 2026</a><br>
     <span style="color:#48D1CC">Mediumturquoise:</span> This planet is in the Conservative Habitable Zone according to <a href="https://ui.adsabs.harvard.edu/abs/2014ApJ...787L..29K/abstract">Kopparapu+ 2014</a><br>
     <span style="color:#66CDAA">Mediumaquamarine:</span> This planet is in the Optimistic Habitable Zone according to <a href="https://ui.adsabs.harvard.edu/abs/2014ApJ...787L..29K/abstract">Kopparapu+ 2014</a><br>
     
