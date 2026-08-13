@@ -390,7 +390,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
             session_state['db'].loc[i,'note']='In HWO TSS list Tier 1, Tuchow+2025'
         else:
             session_state['db'].loc[i,'note']=session_state['db'].loc[i,'note']+'; In HWO TSS list Tier 1, Tuchow+2025'
-    datadfpoints7 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
+    datadfpoints7 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier*0.8,
                                         'phases':phases[ind], 'color':spt[ind], 
                                 'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
                                 'spt':spt[ind], 'dist':session_state['db']['sy_dist'][ind],
@@ -405,7 +405,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     datadfpointsdict7 = datadfpoints7.to_dict(orient = 'list')
     datapoints7=ColumnDataSource(data=datadfpointsdict7)
     p.scatter('plotx','ploty', source=datapoints7, fill_alpha=0.3, size='markersize', 
-                line_color='#8f99fb', color=None, line_width=2, alpha = 0.3)
+                line_color='#8f99fb', color=None, line_width=2, alpha = 0.7)
 
 
     ################# Predict Planet Location
