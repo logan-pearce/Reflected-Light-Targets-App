@@ -744,7 +744,7 @@ st.html(
     <span style="color:#DAA520">Goldenrod:</span> This planet is in the Roman <a href="https://plandb.sioslab.com/index.php">Imaging Mission Database</a><br>
     <span style="color:#9400D3">Darkviolet:</span> This planet is in the <a href="https://ui.adsabs.harvard.edu/abs/2026arXiv260120620B/abstract">ELT-ANDES Golden Sample for Atmosphere Characterization</a><br>
     <span style="color:#008000">Green:</span> This planet is in the "Venus Zone" according to <a href="https://ui.adsabs.harvard.edu/abs/2026arXiv260202728K/abstract">Kane+ 2026</a><br>
-    <span style="color:#8f99fb">Periwinkle:</span> This host star is in the HWO Taarget Stars Tier 1 <a href="https://arxiv.org/abs/2509.20544v2">Tuchow+ 2026</a><br>
+    <span style="color:#8f99fb">Periwinkle:</span> This host star is in the HWO Target Stars Tier 1 <a href="https://arxiv.org/abs/2509.20544v2">Tuchow+ 2026</a><br>
     <span style="color:#48D1CC">Mediumturquoise:</span> This planet is in the Conservative Habitable Zone according to <a href="https://ui.adsabs.harvard.edu/abs/2014ApJ...787L..29K/abstract">Kopparapu+ 2014</a><br>
     <span style="color:#66CDAA">Mediumaquamarine:</span> This planet is in the Optimistic Habitable Zone according to <a href="https://ui.adsabs.harvard.edu/abs/2014ApJ...787L..29K/abstract">Kopparapu+ 2014</a><br>
     
