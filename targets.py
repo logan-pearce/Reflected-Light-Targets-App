@@ -234,35 +234,8 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     keys = [key for key in plDict.keys() if '---' not in key]
     names = np.array(data.data['name'])
     
-    #try:
-    ind = np.array([], dtype=int)
-    for key in keys:
-        try:
-            ind = np.append(ind,int(np.where(names == key)[0][0]))
-        except IndexError:
-            pass
-    session_state['db'].loc[ind,'note']='In Predict Planet Location'
-    datadfpoints = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
-                                        'phases':phases[ind], 'color':spt[ind], 
-                                'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
-                                'spt':spt[ind], 'dist':session_state['db']['sy_dist'][ind],
-                                    'phases':phases[ind], 'plotx_og':plotx[ind], 'ploty_og':ploty[ind], 'iwa': 2, 
-                                    'sepau':sepau[ind], 'sepmas':sepmas[ind], 'dec':session_state['db']['dec'][ind], 
-                                    'starteff':session_state['db']['StarTeff'][ind],
-                                    'masse':session_state['db']['pl_bmasse'][ind],'period':session_state['db']['pl_orbper'][ind],
-                                    'sep_elt':sep_elt[ind], 'sep_mag':sep_mag[ind],'stargaiamag':session_state['db']['sy_gaiamag'][ind],
-                                    'note':session_state['db']['note'][ind]
-                                })
-    datadfpoints = datadfpoints.reset_index(drop=True)
-    datadfpointsdict = datadfpoints.to_dict(orient = 'list')
-    datapoints=ColumnDataSource(data=datadfpointsdict)
-    p.scatter('plotx','ploty', source=datapoints, fill_alpha=1, size='markersize', 
-                line_color='orangered', color=None, line_width=2)
 
-
-    names = np.array(data.data['name'])
-
-    ##########
+    ########## PlanDB
     plandb = pd.read_csv('plandb.csv')
     
     #try:
@@ -290,7 +263,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     p.scatter('plotx','ploty', source=datapoints2, fill_alpha=1, size='markersize', 
                 line_color='goldenrod', color=None, line_width=2)
     
-    #######
+    ####### Andes golden sample
     andes = ['Proxima Cen b', 'GJ 273 b', 'Wolf 1061 c', 'GJ 682 b', 'Ross 128 b']
 
     ind = np.array([], dtype=int)
@@ -320,7 +293,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     p.scatter('plotx','ploty', source=datapoints3, fill_alpha=1, size='markersize', 
                 line_color='darkviolet', color=None, line_width=2)
     
-    ##########
+    ########## Venus Zone
     venus = ['HD 20794 d', 'HD 219134 d', 'GJ 411 b', 'HD 219134 f', 'Proxima Cen d', 'Barnard e', 'Wolf 1061 c', 'GJ 15 A b',
              'Gl 725 A b', 'GJ 273 b', 'Barnard c', 'GJ 1061 d', 'Ross 128 b', 'GJ 251 b', 'Barnard b', 'GJ 625 b', 'Barnard d', 
              'L 98-59 f', 'GJ 1061 c', 'AU Mic d']
@@ -353,7 +326,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     p.scatter('plotx','ploty', source=datapoints4, fill_alpha=1, size='markersize', 
                 line_color='green', color=None, line_width=2)
     
-    #############
+    ############# HZ
     ind = np.array([], dtype=int)
     for i in range(len(session_state['db'])):
         if session_state['db'].loc[i,'HZ'] == 2:
@@ -380,7 +353,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     p.scatter('plotx','ploty', source=datapoints5, fill_alpha=1, size='markersize', 
                 line_color='#66CDAA', color=None, line_width=2)
     
-    #############
+    ############# HWO TSS
     ind = np.array([], dtype=int)
     for i in range(len(session_state['db'])):
         if session_state['db'].loc[i,'HZ'] == 1:
@@ -407,7 +380,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     p.scatter('plotx','ploty', source=datapoints6, fill_alpha=1, size='markersize', 
                 line_color='#48D1CC', color=None, line_width=2)
 
-    #######
+    ################# Predict Planet Location
     aodb_copy = aodb.copy()
     ind = [i for i in range(len(aodb_copy)) if type(aodb_copy.loc[i,'Note'])==float]
     aodb_copy.loc[ind,'Note'] = ''
@@ -432,9 +405,35 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     datadfpointsdict7 = datadfpoints7.to_dict(orient = 'list')
     datapoints7=ColumnDataSource(data=datadfpointsdict7)
     p.scatter('plotx','ploty', source=datapoints7, fill_alpha=0.3, size='markersize', 
-                line_color='#8f99fb', color=None, line_width=2)
+                line_color='#8f99fb', color=None, line_width=2, alpha = 0.3)
 
-    ############## instrument cont curves #######################
+
+    ################# Predict Planet Location
+    ind = np.array([], dtype=int)
+    for key in keys:
+        try:
+            ind = np.append(ind,int(np.where(names == key)[0][0]))
+        except IndexError:
+            pass
+    session_state['db'].loc[ind,'note']='In Predict Planet Location'
+    datadfpoints = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier,
+                                        'phases':phases[ind], 'color':spt[ind], 
+                                'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
+                                'spt':spt[ind], 'dist':session_state['db']['sy_dist'][ind],
+                                    'phases':phases[ind], 'plotx_og':plotx[ind], 'ploty_og':ploty[ind], 'iwa': 2, 
+                                    'sepau':sepau[ind], 'sepmas':sepmas[ind], 'dec':session_state['db']['dec'][ind], 
+                                    'starteff':session_state['db']['StarTeff'][ind],
+                                    'masse':session_state['db']['pl_bmasse'][ind],'period':session_state['db']['pl_orbper'][ind],
+                                    'sep_elt':sep_elt[ind], 'sep_mag':sep_mag[ind],'stargaiamag':session_state['db']['sy_gaiamag'][ind],
+                                    'note':session_state['db']['note'][ind]
+                                })
+    datadfpoints = datadfpoints.reset_index(drop=True)
+    datadfpointsdict = datadfpoints.to_dict(orient = 'list')
+    datapoints=ColumnDataSource(data=datadfpointsdict)
+    p.scatter('plotx','ploty', source=datapoints, fill_alpha=1, size='markersize', 
+                line_color='orangered', color=None, line_width=2)
+
+    ######################################### instrument cont curves #######################
 
     if not show_contrast_curves:
         pass
