@@ -504,6 +504,49 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     p.scatter('plotx','ploty', source=datapoints7, fill_alpha=0.3, size='markersize', 
                 line_color='#8f99fb', color=None, line_width=2, alpha = 0.8)
 
+    #######
+    EarthSimilarityIndexSelected = [
+    'TRAPPIST-1 f', "Teegarden's Star c", 'Kepler-1229 b', 'TRAPPIST-1 g', 
+    'TOI-700 d', 'Proxima Cen b', 'GJ 1002 b', 'GJ 1061 d', 'Kepler-296 e', 'Wolf 1069 b', 'TRAPPIST-1 e', 'Kepler-1652 b', 'TOI-715 b',
+    "Teegarden's Star b", 'Kepler-1649 c', 'TOI-700 e', 'TRAPPIST-1 d', 'K2-72 e', 'GJ 1061 c', 'Ross 128 b', 'GJ 273 b', 'K2-3 d']
+    BisesiHabCat = ['Snowball', 'Snowball', 'Snowball', 'Snowball', 'Eyeball', 'Eyeball', 'Eyeball', 'Eyeball', 'Eyeball', 'Eyeball', 'Eyeball', 'Eyeball', 'Eyeball', 'Hot', 'Hot', 'Hot', 'Hot', 'Hot', 'Hot', 'Hot', 'Hot', 'Hot']
+    ESI = [
+    0.68, 0.66, 0.62, 0.58,
+    0.91,0.86,0.86,0.86,0.85,0.85,0.85,0.83,0.81,
+    0.97,0.93,0.91,0.91,0.87,0.86,0.86,0.85,0.81
+    ]
+        
+    ind = np.array([], dtype=int)
+    for j,name in enumerate(EarthSimilarityIndexSelected):
+        try:
+            i = int(np.where(names == name)[0][0])
+            ind = np.append(ind,int(np.where(names == name)[0][0]))
+            if session_state['db'].loc[i,'note'] == '':
+                    session_state['db'].loc[i,'note']='In HWC Earth Similarity Index, ESI = {}, Bisesi Category = {}'.format(ESI[j],BisesiHabCat[j])
+            else:
+                session_state['db'].loc[i,'note']=session_state['db'].loc[i,'note']+'; In HWC Earth Similarity Index, ESI = {}, Bisesi Category = {}'.format(ESI[j],BisesiHabCat[j])
+        except IndexError:
+            pass
+    
+    
+    
+    datadfpoints8 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier*0.9,
+                                        'phases':phases[ind], 'color':spt[ind], 
+                                'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
+                                'spt':spt[ind], 'dist':session_state['db']['sy_dist'][ind],
+                                    'phases':phases[ind], 'plotx_og':plotx[ind], 'ploty_og':ploty[ind], 'iwa': 2, 
+                                    'sepau':sepau[ind], 'sepmas':sepmas[ind], 'dec':session_state['db']['dec'][ind], 
+                                    'starteff':session_state['db']['StarTeff'][ind],'instel':session_state['db']['EarthEqInstell'][ind],
+                                    'masse':session_state['db']['pl_bmasse'][ind],'period':session_state['db']['pl_orbper'][ind],
+                                    'sep_elt':sep_elt[ind], 'sep_mag':sep_mag[ind],'stargaiamag':session_state['db']['sy_gaiamag'][ind],
+                                    'note':session_state['db']['note'][ind]
+                                })
+    datadfpoints8 = datadfpoints8.reset_index(drop=True)
+    datadfpointsdict8 = datadfpoints8.to_dict(orient = 'list')
+    datapoints8=ColumnDataSource(data=datadfpointsdict8)
+    p.scatter('plotx','ploty', source=datapoints8, fill_alpha=0.3, size='markersize', 
+                line_color='#FF33CF', color=None, line_width=2, alpha = 0.8)
+
     ############## instrument cont curves #######################
 
     if not show_contrast_curves:
@@ -670,6 +713,20 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
         DSlider.js_on_change('value', CustomJS(args=slider_args7,code=sliders_callback_code))
     except UnboundLocalError:
         pass
+    try:
+        slider_args8 = dict(source=datapoints7, Ag=AgSlider, Lambda=LambdaSlider, D=DSlider)
+        AgSlider.js_on_change('value', CustomJS(args=slider_args8,code=sliders_callback_code))
+        LambdaSlider.js_on_change('value', CustomJS(args=slider_args8,code=sliders_callback_code))
+        DSlider.js_on_change('value', CustomJS(args=slider_args8,code=sliders_callback_code))
+    except UnboundLocalError:
+        pass
+    try:
+        slider_args9 = dict(source=datapoints8, Ag=AgSlider, Lambda=LambdaSlider, D=DSlider)
+        AgSlider.js_on_change('value', CustomJS(args=slider_args9,code=sliders_callback_code))
+        LambdaSlider.js_on_change('value', CustomJS(args=slider_args9,code=sliders_callback_code))
+        DSlider.js_on_change('value', CustomJS(args=slider_args9,code=sliders_callback_code))
+    except UnboundLocalError:
+        pass
 
     st.bokeh_chart = use_file_for_bokeh
     # st.bokeh_chart(column(p, row(AgSlider),row(LambdaSlider),row(DSlider)), use_container_width=True)
@@ -746,6 +803,7 @@ st.html(
     <span style="color:#8f99fb">Periwinkle:</span> This host star is in the HWO Target Stars Tier 1 <a href="https://arxiv.org/abs/2509.20544v2">Tuchow+ 2026</a><br>
     <span style="color:#48D1CC">Mediumturquoise:</span> This planet is in the Conservative Habitable Zone according to <a href="https://ui.adsabs.harvard.edu/abs/2014ApJ...787L..29K/abstract">Kopparapu+ 2014</a><br>
     <span style="color:#66CDAA">Mediumaquamarine:</span> This planet is in the Optimistic Habitable Zone according to <a href="https://ui.adsabs.harvard.edu/abs/2014ApJ...787L..29K/abstract">Kopparapu+ 2014</a><br>
+    <span style="color:#FF33CF">Pink:</span> This planet has a high <a href="https://journals.sagepub.com/doi/abs/10.1089/ast.2010.0592">Earth Similarity Index</a> and tidally locked habitability assessed by <a href="https://arxiv.org/abs/2608.25451">Bisesi+ 2026</a><br>
     
 
 
