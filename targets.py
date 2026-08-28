@@ -547,6 +547,22 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     p.scatter('plotx','ploty', source=datapoints8, fill_alpha=0.3, size='markersize', 
                 line_color='#FF33CF', color=None, line_width=2, alpha = 0.8)
 
+    #######
+    names = ['HD 215152', "Barnard", 'HD 184010', 'HD 28471', 'YZ Cet']
+        
+    ind = np.array([], dtype=int)
+    for j,name in enumerate(names):
+        try:
+            i = int(np.where(names == name)[0][0])
+            ind = np.append(ind,int(np.where(names == name)[0][0]))
+            if session_state['db'].loc[i,'note'] == '':
+                    session_state['db'].loc[i,'note']='Has true mass estimate in Byrne & Bonsor 2026'
+            else:
+                session_state['db'].loc[i,'note']=session_state['db'].loc[i,'note']+'; Has true mass estimate in Byrne & Bonsor 2026'
+        except IndexError:
+            pass
+    # I don't care to add circles for these
+
     ############## instrument cont curves #######################
 
     if not show_contrast_curves:
