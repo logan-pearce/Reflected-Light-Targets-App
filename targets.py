@@ -129,6 +129,13 @@ def GetPointsWithinARegion(xdata, ydata, points):
     return indicieswithinregion
 
 
+def _index_of(values, value):
+    matches = np.flatnonzero(np.atleast_1d(np.asarray(values)) == value)
+    if matches.size == 0:
+        raise IndexError(value)
+    return int(matches[0])
+
+
 def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_curve = None, show_contrast_curves = False):
     rad = session_state['db']['PlanetRadiuse'].copy()
     spt = session_state['db']['SpTNumber'].copy()
@@ -168,7 +175,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
                                 })
     datadf = datadf.reset_index(drop=True)
     datadict = datadf.to_dict(orient = 'list')
-    proxcendf = datadf.loc[np.where(datadf['name'] == 'Proxima Cen b')]
+    proxcendf = datadf.loc[datadf['name'].eq('Proxima Cen b')]
     proxcendict = proxcendf.to_dict(orient = 'list')
 
     from bokeh.plotting import figure, show, output_file, save
@@ -231,13 +238,13 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     ########## circles ##############
 
     keys = [key for key in plDict.keys() if '---' not in key]
-    names = np.array(data.data['name'])
+    names = np.atleast_1d(np.asarray(data.data['name']))
     
     #try:
     ind = np.array([], dtype=int)
     for key in keys:
         try:
-            ind = np.append(ind,int(np.where(names == key)[0][0]))
+            ind = np.append(ind, _index_of(names, key))
         except IndexError:
             pass
     session_state['db'].loc[ind,'note']='In Predict Planet Location'
@@ -259,7 +266,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
                 line_color='orangered', color=None, line_width=2)
 
 
-    names = np.array(data.data['name'])
+    names = np.atleast_1d(np.asarray(data.data['name']))
 
     ##########
     plandb = pd.read_csv('plandb.csv')
@@ -268,7 +275,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     ind = np.array([], dtype=int)
     for name in plandb['pl_name']:
         try:
-            ind = np.append(ind,int(np.where(names == name)[0][0]))
+            ind = np.append(ind, _index_of(names, name))
         except IndexError:
             pass
     session_state['db'].loc[ind,'note']='In Imaging Mission Database'
@@ -295,7 +302,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     ind = np.array([], dtype=int)
     for name in andes:
         try:
-            ind = np.append(ind,int(np.where(names == name)[0][0]))
+            ind = np.append(ind, _index_of(names, name))
         except IndexError:
             pass
     if session_state['db'].loc[ind,'note'].any() == '':
@@ -327,7 +334,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     ind = np.array([], dtype=int)
     for name in venus:
         try:
-            ind = np.append(ind,int(np.where(names == name)[0][0]))
+            ind = np.append(ind, _index_of(names, name))
         except IndexError:
             pass
     
@@ -478,7 +485,7 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     ind = np.array([], dtype=int)
     for name in inTSS:
         try:
-            ind = np.append(ind,int(np.where(names == name)[0][0]))
+            ind = np.append(ind, _index_of(names, name))
         except IndexError:
             pass
     
@@ -519,8 +526,8 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     ind = np.array([], dtype=int)
     for j,name in enumerate(EarthSimilarityIndexSelected):
         try:
-            i = int(np.where(names == name)[0][0])
-            ind = np.append(ind,int(np.where(names == name)[0][0]))
+            i = _index_of(names, name)
+            ind = np.append(ind, i)
             if session_state['db'].loc[i,'note'] == '':
                     session_state['db'].loc[i,'note']='In HWC Earth Similarity Index, ESI = {}, Bisesi Category = {}'.format(ESI[j],BisesiHabCat[j])
             else:
@@ -553,8 +560,8 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
     ind = np.array([], dtype=int)
     for j,name in enumerate(true_mass_names):
         try:
-            i = int(np.where(names == name)[0][0])
-            ind = np.append(ind,int(np.where(names == name)[0][0]))
+            i = _index_of(names, name)
+            ind = np.append(ind, i)
             if session_state['db'].loc[i,'note'] == '':
                     session_state['db'].loc[i,'note']='Has true mass estimate in Byrne & Bonsor 2026'
             else:
