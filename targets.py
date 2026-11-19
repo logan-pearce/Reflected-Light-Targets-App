@@ -873,7 +873,8 @@ st.html(
     <span style="color:#48D1CC">Mediumturquoise:</span> This planet is in the Conservative Habitable Zone according to <a href="https://ui.adsabs.harvard.edu/abs/2014ApJ...787L..29K/abstract">Kopparapu+ 2014</a><br>
     <span style="color:#66CDAA">Mediumaquamarine:</span> This planet is in the Optimistic Habitable Zone according to <a href="https://ui.adsabs.harvard.edu/abs/2014ApJ...787L..29K/abstract">Kopparapu+ 2014</a><br>
     <span style="color:#FF33CF">Pink:</span> This planet has a high <a href="https://journals.sagepub.com/doi/abs/10.1089/ast.2010.0592">Earth Similarity Index</a> and tidally locked habitability assessed by <a href="https://arxiv.org/abs/2608.25451">Bisesi+ 2026</a><br>
-    <span style="color:#FC2275">Hot pink:</span> This planet has a high <a href="https://journals.sagepub.com/doi/abs/10.1089/ast.2010.0592">Earth Similarity Index</a> and tidally locked habitability assessed by <a href="https://arxiv.org/abs/2608.25451">Bisesi+ 2026</a><br>
+    <span style="color:#FC2275">Hot pink:</span> Candidate target for Lazuli ESC Atlas program in
+      <a href="https://scixplorer.org/abs/2026arXiv261031286P/abstract">Pearce & Douglas 2026</a><br>
         
 
 
