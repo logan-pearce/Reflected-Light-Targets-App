@@ -555,6 +555,45 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
                 line_color='#FF33CF', color=None, line_width=2, alpha = 0.8)
 
     #######
+    LazNames = [  '14 Her b',     'GJ 832 b',  'HD 114783 c',  'HD 190360 b',
+    'bet Pic b',  'HD 154345 b',   'HD 87883 b',     'pi Men b',
+  'HD 100508 b',    'bet Pic c',    'eps Eri b',    'gam Cep b',
+    'ups And d',     '47 UMa b',     '47 UMa c',  'HD 160691 c',
+  'HD 192310 c',  'HD 128311 c',   'HD 10647 b',      '7 CMa b',
+  'HD 164922 b',  'HD 216437 b',      '7 CMa c',  'HD 219134 h',
+   'HD 70642 b',  'HD 160691 b', 'psi1 Dra B b']   
+    ind = np.array([], dtype=int)
+    for j,name in enumerate(LazNames):
+        try:
+            i = _index_of(LazNames, name)
+            ind = np.append(ind, i)
+            if session_state['db'].loc[i,'note'] == '':
+                    session_state['db'].loc[i,'note']='Lazuli ESC Atlas candidate target in Pearce & Douglas 2026'
+            else:
+                session_state['db'].loc[i,'note']=session_state['db'].loc[i,'note']+'; Lazuli ESC Atlas candidate target in Pearce & Douglas 2026'
+        except IndexError:
+            pass
+    
+    datadfpoints9 = pd.DataFrame(data={'plotx':plotx[ind], 'ploty':ploty[ind], 'markersize':rad[ind]*multiplier*0.9,
+                                        'phases':phases[ind], 'color':spt[ind], 
+                                'name':session_state['db']['pl_name'][ind], 'rad':rad[ind], 
+                                'spt':spt[ind], 'dist':session_state['db']['sy_dist'][ind],
+                                    'phases':phases[ind], 'plotx_og':plotx[ind], 'ploty_og':ploty[ind], 'iwa': 2, 
+                                    'sepau':sepau[ind], 'sepmas':sepmas[ind], 'dec':session_state['db']['dec'][ind], 
+                                    'starteff':session_state['db']['StarTeff'][ind],'instel':session_state['db']['EarthEqInstell'][ind],
+                                    'masse':session_state['db']['pl_bmasse'][ind],'period':session_state['db']['pl_orbper'][ind],
+                                    'sep_elt':sep_elt[ind], 'sep_mag':sep_mag[ind],'stargaiamag':session_state['db']['sy_gaiamag'][ind],
+                                    'note':session_state['db']['note'][ind]
+                                })
+    datadfpoints9 = datadfpoints9.reset_index(drop=True)
+    datadfpointsdict9 = datadfpoints9.to_dict(orient = 'list')
+    datapoints9=ColumnDataSource(data=datadfpointsdict9)
+    p.scatter('plotx','ploty', source=datapoints9, fill_alpha=0.3, size='markersize', 
+                line_color='#FC2275', color=None, line_width=2, alpha = 0.8)
+
+    #######
+
+    #######
     true_mass_names = ['HD 215152', "Barnard", 'HD 184010', 'HD 28471', 'YZ Cet']
         
     ind = np.array([], dtype=int)
@@ -750,6 +789,13 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
         DSlider.js_on_change('value', CustomJS(args=slider_args9,code=sliders_callback_code))
     except UnboundLocalError:
         pass
+    try:
+        slider_args10 = dict(source=datapoints8, Ag=AgSlider, Lambda=LambdaSlider, D=DSlider)
+        AgSlider.js_on_change('value', CustomJS(args=slider_args10,code=sliders_callback_code))
+        LambdaSlider.js_on_change('value', CustomJS(args=slider_args10,code=sliders_callback_code))
+        DSlider.js_on_change('value', CustomJS(args=slider_args10,code=sliders_callback_code))
+    except UnboundLocalError:
+        pass
 
     st.bokeh_chart = use_file_for_bokeh
     # st.bokeh_chart(column(p, row(AgSlider),row(LambdaSlider),row(DSlider)), use_container_width=True)
@@ -827,7 +873,8 @@ st.html(
     <span style="color:#48D1CC">Mediumturquoise:</span> This planet is in the Conservative Habitable Zone according to <a href="https://ui.adsabs.harvard.edu/abs/2014ApJ...787L..29K/abstract">Kopparapu+ 2014</a><br>
     <span style="color:#66CDAA">Mediumaquamarine:</span> This planet is in the Optimistic Habitable Zone according to <a href="https://ui.adsabs.harvard.edu/abs/2014ApJ...787L..29K/abstract">Kopparapu+ 2014</a><br>
     <span style="color:#FF33CF">Pink:</span> This planet has a high <a href="https://journals.sagepub.com/doi/abs/10.1089/ast.2010.0592">Earth Similarity Index</a> and tidally locked habitability assessed by <a href="https://arxiv.org/abs/2608.25451">Bisesi+ 2026</a><br>
-    
+    <span style="color:#FC2275">Hot pink:</span> This planet has a high <a href="https://journals.sagepub.com/doi/abs/10.1089/ast.2010.0592">Earth Similarity Index</a> and tidally locked habitability assessed by <a href="https://arxiv.org/abs/2608.25451">Bisesi+ 2026</a><br>
+        
 
 
 """
