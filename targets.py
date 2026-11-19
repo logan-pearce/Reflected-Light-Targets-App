@@ -548,10 +548,10 @@ def MakeInteractiveSeparationContrastPlotOfNearbyRVPlanets(session_state, cont_c
                 line_color='#FF33CF', color=None, line_width=2, alpha = 0.8)
 
     #######
-    names = ['HD 215152', "Barnard", 'HD 184010', 'HD 28471', 'YZ Cet']
+    true_mass_names = ['HD 215152', "Barnard", 'HD 184010', 'HD 28471', 'YZ Cet']
         
     ind = np.array([], dtype=int)
-    for j,name in enumerate(names):
+    for j,name in enumerate(true_mass_names):
         try:
             i = int(np.where(names == name)[0][0])
             ind = np.append(ind,int(np.where(names == name)[0][0]))
